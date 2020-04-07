@@ -4,6 +4,7 @@ package ru.datana.steel.mes.config;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,9 +12,9 @@ import org.springframework.stereotype.Component;
  */
 @Getter
 @Setter
-@Component("testingActiveMqConfigurationProperties")
-@ConfigurationProperties(prefix = "safe.activemq")
-public class MesActiveMqConfigurationProperties {
+@ConfigurationProperties(prefix = "datana.activemq")
+@Configuration
+public class JmsProperties {
 
 
     private String brokerUrl;
