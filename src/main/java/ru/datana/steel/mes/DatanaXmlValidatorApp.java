@@ -16,8 +16,7 @@ import java.nio.charset.Charset;
 
 @Slf4j
 public class DatanaXmlValidatorApp {
-    //private final String xmlFileName = "xml-test.xml";
-    private final String xmlFileName = "gen-xml.xml";
+    private final String xmlFileName = "xml-test.xml";
     public final String schemaFileName = "input-xsd-schema.xsd";
     private static final String dir = "/home/lin/work-lanit/DatanaMesGateway-K9/etc";
     private static final Charset ENCODING = Charset.forName("UTF8");

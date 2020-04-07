@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<chemicalCompositionData>
+<?xml version="1.0" encoding="UTF-8"?>
+<tns:chemicalCompositionData xmlns:tns="http://datana.ru/publishing">
     <smeltingNumber>str1234</smeltingNumber>
     <sampleNumber>str1234</sampleNumber>
     <samplingDatetime>2012-12-13T12:12:12</samplingDatetime>
@@ -12,4 +12,4 @@
             <controlledElementValue>123.45</controlledElementValue>
         </controlledElementItem>
     </controlledElementsAnalysisResults>
-</chemicalCompositionData>
+</tns:chemicalCompositionData>
