@@ -51,8 +51,11 @@ public class DatanaXmlValidator {
             StreamSource xmlSource = new StreamSource(xmlReader);
             validator.validate(xmlSource);
             return true;
-        } catch (SAXException | IOException e) {
-            log.error("Error validate", e);
+        } catch (IOException ioEx) {
+            log.warn(AppConst.ERROR_LOG_PREFIX + "Ошибка при чтеннии сообщения xmlSource = " + xmlAsString, ioEx);
+            return false;
+        } catch (SAXException saxEx) {
+            log.warn(AppConst.ERROR_LOG_PREFIX + "Не валиный xml: ", saxEx.getLocalizedMessage());
             return false;
         }
     }
