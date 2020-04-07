@@ -35,8 +35,7 @@ public class MesActiveMqSpringConfig {
 
     @Bean
     protected JmsTemplate jmsRequestTemplate(@Qualifier("activeMqJMSConnectionFactory") ConnectionFactory connectionFactory,
-                                             @Qualifier("activeMqRequestDestination") ActiveMQQueue requestQueue,
-                                             ) {
+                                             @Qualifier("activeMqRequestDestination") ActiveMQQueue requestQueue) {
         JmsTemplate template = new JmsTemplate();
 
         template.setConnectionFactory(connectionFactory);
