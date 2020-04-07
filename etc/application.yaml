@@ -2,12 +2,14 @@ datana:
   activemq:
     brokerUrl: tcp://localhost:61616
     requestQueue: jmsFromMes
-    responseQueue: jmsToError
+    responseQueue: jmsFromMesToError
   global:
     ## просьба версию не менять
     appVersion: datana-mes-alfa-1
     # уровень вывода логов
     debug: true
+    log:
+      level: INFO
   spring:
     datasource:
       driver-class: org.postgresql.Driver

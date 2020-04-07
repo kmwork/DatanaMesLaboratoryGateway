@@ -25,8 +25,6 @@ import javax.jms.MessageListener;
 @Slf4j
 public class MesActiveMqSpringConfig {
 
-    @Autowired
-    protected MessageConverter messageConverter;
 
     @Autowired
     protected MesActiveMqConfigurationProperties properties;
@@ -38,19 +36,13 @@ public class MesActiveMqSpringConfig {
     @Bean
     protected JmsTemplate jmsRequestTemplate(@Qualifier("activeMqJMSConnectionFactory") ConnectionFactory connectionFactory,
                                              @Qualifier("activeMqRequestDestination") ActiveMQQueue requestQueue,
-                                             @Qualifier("mesMessageConverter") MessageConverter messageConverter) {
+                                             ) {
         JmsTemplate template = new JmsTemplate();
 
         template.setConnectionFactory(connectionFactory);
         template.setDefaultDestination(requestQueue);
-        template.setMessageConverter(messageConverter);
         return template;
     }
-
-
-    @Autowired
-    @Qualifier("mesMessageConverter")
-    protected MessageConverter mesMessageConverter;
 
 
     @Bean
