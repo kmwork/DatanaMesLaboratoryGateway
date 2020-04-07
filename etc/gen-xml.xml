@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<chemicalCompositionData>
+    <smeltingNumber>str1234</smeltingNumber>
+    <sampleNumber>str1234</sampleNumber>
+    <samplingDatetime>2012-12-13T12:12:12</samplingDatetime>
+    <sampleAnalysisDatetime>2012-12-13T12:12:12</sampleAnalysisDatetime>
+    <compositionType>STEEL</compositionType>
+    <unitName>str1234</unitName>
+    <controlledElementsAnalysisResults>
+        <controlledElementItem>
+            <controlledElementName>C</controlledElementName>
+            <controlledElementValue>123.45</controlledElementValue>
+        </controlledElementItem>
+    </controlledElementsAnalysisResults>
+</chemicalCompositionData>

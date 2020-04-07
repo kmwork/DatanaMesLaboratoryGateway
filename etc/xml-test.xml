@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chemicalCompositionData>
+    <smeltingNumber>0</smeltingNumber>
+    <sampleNumber>sampleNumber0</sampleNumber>
+    <samplingDatetime>2006-05-04T18:13:51.0</samplingDatetime>
+    <sampleAnalysisDatetime>2006-05-04T18:13:51.0</sampleAnalysisDatetime>
+    <compositionType>STEEL</compositionType>
+    <unitName>UVS2</unitName>
+    <controlledElementsAnalysisResults>
+        <controlledElementItem>
+            <controlledElementName>AL_SOL</controlledElementName>
+            <controlledElementValue>0.2345</controlledElementValue>
+        </controlledElementItem>
+        <controlledElementItem>
+            <controlledElementName>TI</controlledElementName>
+            <controlledElementValue>0.23556</controlledElementValue>
+        </controlledElementItem>
+    </controlledElementsAnalysisResults>
+</chemicalCompositionData>
