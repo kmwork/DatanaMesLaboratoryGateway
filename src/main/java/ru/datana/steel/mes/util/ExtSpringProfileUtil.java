@@ -12,7 +12,8 @@ public class ExtSpringProfileUtil {
 
     /**
      * Настройка Spring-приложение из вышесенных во внешнюю папку etc настроек спринга
-     * @param springFile    файл для YAML настроек
+     *
+     * @param springFile файл для YAML настроек
      */
     public static void extConfigure(String springFile) {
 

@@ -5,13 +5,15 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.listener.MessageListenerContainer;
 import org.springframework.jms.support.converter.MessageConverter;
 import ru.datana.steel.mes.jms.MesJmsReceiver;
+
 import javax.jms.ConnectionFactory;
 import javax.jms.MessageListener;
 
@@ -81,9 +83,6 @@ public class MesActiveMqSpringConfig {
     @Autowired
     @Qualifier("mesJmsReceiver")
     protected MessageListener mesJmsReceiver;
-
-
-
 
 
     @Bean
