@@ -48,7 +48,7 @@ public class MesJmsReceiver implements MessageListener {
             log.info(prefix + "input message = " + msg);
 
             DatanaXmlValidator.getInstance();
-            xmlValidator.validate(msg)
+            xmlValidator.validate(msg);
         } catch (Exception e) {
             String errorMsg = String.format(AppConst.ERROR_LOG_PREFIX, jmsDestination, msg);
             log.error(errorMsg, e);

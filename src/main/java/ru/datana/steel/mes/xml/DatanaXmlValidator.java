@@ -39,7 +39,7 @@ public class DatanaXmlValidator {
             Schema schema = schemaFactory.newSchema(streamStreamSource);
             validator = schema.newValidator();
         } catch (Exception e) {
-            log.error(AppConst.ERROR_LOG_PREFIX + "Ошибка чтения файла xsd-schema = '{}'"schemaFile.getAbsolutePath());
+            log.error(AppConst.ERROR_LOG_PREFIX + "Ошибка чтения файла xsd-schema = '{}'", schemaFile.getAbsolutePath());
             System.exit(-115);
         }
     }

@@ -11,8 +11,6 @@ import org.springframework.jms.support.converter.MarshallingMessageConverter;
 import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.datana.steel.mes.xml.pojo.ChemicalCompositionDataType;
-import ru.sbrf.ais.microservices.safe.model.xml.*;
 
 import javax.annotation.PostConstruct;
 
