@@ -45,7 +45,7 @@ public class MesActiveMqSpringConfig {
 
     @Bean
     protected ConnectionFactory activeMqJMSConnectionFactory() {
-        return new ActiveMQConnectionFactory(properties.getBrokerUrl());
+        return new ActiveMQConnectionFactory(jmsProperties.getBrokerUrl());
     }
 
     @Bean
@@ -60,13 +60,13 @@ public class MesActiveMqSpringConfig {
 
     @Bean
     protected ActiveMQQueue activeMqRequestDestination() {
-        return new ActiveMQQueue(properties.getRequestQueue());
+        return new ActiveMQQueue(jmsProperties.getRequestQueue());
     }
 
 
     @Bean
     protected ActiveMQQueue activeMqResponseDestination() {
-        return new ActiveMQQueue(properties.getResponseQueue());
+        return new ActiveMQQueue(jmsProperties.getResponseQueue());
     }
 
 
