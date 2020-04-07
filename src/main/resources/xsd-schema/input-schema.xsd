@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="urn://datana-ru/integration/chemical-compositions/1.0.0"
+           targetNamespace="urn://datana-ru/integration/chemical-compositions/1.0.0" elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+    <xs:element name="chemicalCompositionData" type="tns:ChemicalCompositionDataType"/>
+
+    <xs:complexType name="ChemicalCompositionDataType">
+        <xs:annotation>
+            <xs:documentation>Наименование химического элемента или параметра и результат</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="smeltingNumber" type="tns:SmeltingNumberType" minOccurs="1"/>
+            <xs:element name="sampleNumber" type="tns:SampleNumberType" minOccurs="1"/>
+            <xs:element name="samplingDatetime" type="tns:SamplingDatetimeType" minOccurs="1"/>
+            <xs:element name="sampleAnalysisDatetime" type="tns:SampleAnalysisDatetimeType" minOccurs="1"/>
+            <xs:element name="compositionType" type="tns:CompositionTypeType" minOccurs="1"/>
+            <xs:element name="unitName" type="tns:UnitNameType" minOccurs="1"/>
+            <xs:element name="controlledElementsAnalysisResults" type="tns:ControlledElementsAnalysisResultsType"
+                        minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ControlledElementsAnalysisResultsType">
+        <xs:annotation>
+            <xs:documentation>Результаты химического анализа</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="controlledElementItem" type="tns:ControlledElementItemType" minOccurs="1"
+                        maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Наименование химического элемента или параметра и результат</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ControlledElementItemType">
+        <xs:annotation>
+            <xs:documentation>Наименование химического элемента или параметра и результат</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="сontrolledElementName" type="tns:ControlledElementNameType" minOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>>Наименование химического элемента или параметра</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="сontrolledElementValue" type="tns:ControlledElementValueType" minOccurs="1"
+                        nillable="false">
+                <xs:annotation>
+                    <xs:documentation>Результат анализа химического элемента или значение параметра</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="ControlledElementValueType">
+        <xs:annotation>
+            <xs:documentation>Результат анализа химического элемента или значение параметра</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:decimal">
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="ControlledElementNameType">
+        <xs:annotation>
+            <xs:documentation>>Наименование химического элемента или параметра</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="C">
+                <xs:annotation>
+                    <xs:documentation>Углерод</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SI">
+                <xs:annotation>
+                    <xs:documentation>Кремний</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MO">
+                <xs:annotation>
+                    <xs:documentation>Молибден</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TI">
+                <xs:annotation>
+                    <xs:documentation>Титан</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="V">
+                <xs:annotation>
+                    <xs:documentation>Ванадий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NB">
+                <xs:annotation>
+                    <xs:documentation>Ниобий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="B">
+                <xs:annotation>
+                    <xs:documentation>Бор</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="N">
+                <xs:annotation>
+                    <xs:documentation>Азот</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CA">
+                <xs:annotation>
+                    <xs:documentation>Кальций</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="H">
+                <xs:annotation>
+                    <xs:documentation>Водород</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="O">
+                <xs:annotation>
+                    <xs:documentation>Кислород</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BA">
+                <xs:annotation>
+                    <xs:documentation>Барий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MN">
+                <xs:annotation>
+                    <xs:documentation>Марганец</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SN">
+                <xs:annotation>
+                    <xs:documentation>Олово</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PB">
+                <xs:annotation>
+                    <xs:documentation>Свинец</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CO">
+                <xs:annotation>
+                    <xs:documentation>Кобальт</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AS">
+                <xs:annotation>
+                    <xs:documentation>Мышьяк</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZR">
+                <xs:annotation>
+                    <xs:documentation>Цирконий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="W">
+                <xs:annotation>
+                    <xs:documentation>Вольфрам</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BI">
+                <xs:annotation>
+                    <xs:documentation>Висмут</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SB">
+                <xs:annotation>
+                    <xs:documentation>Сурьма</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ZN">
+                <xs:annotation>
+                    <xs:documentation>Цинк</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MG">
+                <xs:annotation>
+                    <xs:documentation>Магний</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PB">
+                <xs:annotation>
+                    <xs:documentation>Фосфор</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CE">
+                <xs:annotation>
+                    <xs:documentation>Церий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TA">
+                <xs:annotation>
+                    <xs:documentation>Тантал</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TE">
+                <xs:annotation>
+                    <xs:documentation>Теллур</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FE">
+                <xs:annotation>
+                    <xs:documentation>Железо</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CAO">
+                <xs:annotation>
+                    <xs:documentation>Оксид кальция</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AL2O3">
+                <xs:annotation>
+                    <xs:documentation>Оксид алюминия</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SIO2">
+                <xs:annotation>
+                    <xs:documentation>Оксид кремния</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MNO">
+                <xs:annotation>
+                    <xs:documentation>Оксид марганца</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FEON">
+                <xs:annotation>
+                    <xs:documentation>Оксиды железа</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MGO">
+                <xs:annotation>
+                    <xs:documentation>Оксид магния (жженая магнезия)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+                <xs:annotation>
+                    <xs:documentation>Сера</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CAF2">
+                <xs:annotation>
+                    <xs:documentation>Фторид кальция</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="P2O5">
+                <xs:annotation>
+                    <xs:documentation>Оксид фосфора (V)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CR2O3">
+                <xs:annotation>
+                    <xs:documentation>Оксид хрома (III)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TIAO2">
+                <xs:annotation>
+                    <xs:documentation>Оксид титана (IV)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S_SLG">
+                <xs:annotation>
+                    <xs:documentation>Сера (шлак)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OTHER">
+                <xs:annotation>
+                    <xs:documentation>Прочее</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AL">
+                <xs:annotation>
+                    <xs:documentation>Алюминий</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ALT">
+                <xs:annotation>
+                    <xs:documentation>УТОЧНИТЬ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CU">
+                <xs:annotation>
+                    <xs:documentation>Медь</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CR">
+                <xs:annotation>
+                    <xs:documentation>Хром</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NI">
+                <xs:annotation>
+                    <xs:documentation>Никель</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BASICITY">
+                <xs:annotation>
+                    <xs:documentation>Основность</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="TEMPERATURE">
+                <xs:annotation>
+                    <xs:documentation>Температура</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="OXYDATION">
+                <xs:annotation>
+                    <xs:documentation>Окисленность</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="CompositionTypeType">
+        <xs:annotation>
+            <xs:documentation>Тип химического анализа</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="STEEL">
+                <xs:annotation>
+                    <xs:documentation>Сталь</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CAST_IRON">
+                <xs:annotation>
+                    <xs:documentation>Чугун</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SLAG">
+                <xs:annotation>
+                    <xs:documentation>Шлак</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="UnitNameType">
+        <xs:annotation>
+            <xs:documentation>Имя агрегата где была взята проба</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SampleAnalysisDatetimeType">
+        <xs:annotation>
+            <xs:documentation>Дата и время проведения анализа</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SamplingDatetimeType">
+        <xs:annotation>
+            <xs:documentation>Дата и время взятия пробы</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SampleNumberType">
+        <xs:annotation>
+            <xs:documentation>Номер пробы</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SmeltingNumberType">
+        <xs:annotation>
+            <xs:documentation>Номер плавки</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
