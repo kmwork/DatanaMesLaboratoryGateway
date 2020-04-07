@@ -1,18 +1,13 @@
 package ru.datana.steel.mes;
 
 import lombok.extern.slf4j.Slf4j;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,6 +33,8 @@ public class DatanaXmlValidatorApp {
     private void run() {
         File xmlFile = new File(dir, xmlFileName);
         File schemaFile = new File(dir, schemaFileName);
+        log.info("[Схема] schemaFile = " + schemaFile);
+        log.info("[Xml] xmlFile = " + xmlFile);
         boolean result = validate(xmlFile, schemaFile);
         log.info("File = {} , validation = {}", xmlFile.getAbsolutePath(), result);
     }
@@ -55,7 +52,7 @@ public class DatanaXmlValidatorApp {
             validator.validate(xmlSource);
             return true;
         } catch (SAXException | IOException e) {
-            e.printStackTrace();
+            log.error("Error validate", e);
             return false;
         }
     }
