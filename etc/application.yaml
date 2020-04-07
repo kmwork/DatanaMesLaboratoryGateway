@@ -1,0 +1,62 @@
+datana:
+  activemq:
+    brokerUrl: tcp://localhost:61616
+    requestQueue: jmsFromMes
+    responseQueue: jmsToError
+  global:
+    ## просьба версию не менять
+    appVersion: datana-mes-alfa-1
+    # уровень вывода логов
+    debug: true
+  spring:
+    datasource:
+      driver-class: org.postgresql.Driver
+      jdbcUrl: jdbc:postgresql://localhost:5432/postgres
+      username: postgres
+      password: 1
+      schema: datalake
+
+### НИЖЕ НЕ РЕДАКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯМ !!!! ####
+spring:
+  application:
+    name: ${datana.global.appVersion}
+  datasource:
+    driver-class: ${datana.spring.datasource.driver-class}
+    driver-class-name: ${datana.spring.datasource.driver-class}
+    hikari:
+      auto-commit: false
+      connection-timeout: 60000
+      maximum-pool-size: 5
+      schema: ${datana.spring.datasource.schema}
+    password: ${datana.spring.datasource.password}
+    testWhileIdle: true
+    url: ${datana.spring.datasource.jdbcUrl}
+    jdbcUrl: ${datana.spring.datasource.jdbcUrl}
+    username: ${datana.spring.datasource.username}
+    validationQuery: SELECT 1
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: ru.datana.steel.mes.db.DatanaJsonPostgreSQLDialect
+### logging ###
+logging:
+  level:
+    root: ${datana.global.log.level}
+    executableSql: ${datana.global.log.level}
+    org:
+      apache:
+        tomcat:
+          util: INFO
+      hibernate:
+        engine:
+          transaction: ${datana.global.log.level}
+        SQL: ${datana.global.log.level}
+      springframework:
+        web: ${datana.global.log.level}
+    ru:
+      datana: DEBUG
+    sun: INFO
+    javax: INFO
+
+
