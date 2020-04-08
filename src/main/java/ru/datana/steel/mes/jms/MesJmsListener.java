@@ -67,7 +67,8 @@ public class MesJmsListener implements MessageListener {
                 jmsProducer.sendOnError(errorMsg);
             }
         } catch (Exception e) {
-            log.error(AppConst.ERROR_LOG_PREFIX + "Системная ошибка jmsDestination = {}, ,msg = {}, в классе = {}", jmsDestination, msg, getClass().getSimpleName(), e);
+            log.error(AppConst.ERROR_LOG_PREFIX + "Системная ошибка jmsDestination = {}, ,msg = {}, в классе = {}", jmsDestination, msg, getClass().getSimpleName());
+            log.error(AppConst.ERROR_LOG_PREFIX, e);
         }
 
     }
