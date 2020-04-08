@@ -54,9 +54,9 @@ public class MesJmsListener implements MessageListener {
                 msg = ((TextMessage) message).getText();
                 log.info(prefix + "input message = " + msg);
                 errorMsg = xmlValidator.validate(msg);
-            }
-            else {
+            } else {
                 errorMsg = "WARN: not text message, type message : " + message.getJMSType();
+                log.warn(AppConst.ERROR_LOG_PREFIX + "Не валидный JMS: " + errorMsg);
             }
 
             log.info(prefix + "input message = " + msg);
@@ -67,8 +67,7 @@ public class MesJmsListener implements MessageListener {
                 jmsProducer.sendOnError(errorMsg);
             }
         } catch (Exception e) {
-            String errorMsg = String.format(AppConst.ERROR_LOG_PREFIX, jmsDestination, msg);
-            log.error(errorMsg, e);
+            log.error(AppConst.ERROR_LOG_PREFIX, "Системная ошибка jmsDestination = {}, ,msg = {}, в классе = {}", jmsDestination,msg, getClass().getSimpleName(), e);
         }
 
     }
