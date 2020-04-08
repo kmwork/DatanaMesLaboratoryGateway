@@ -1,9 +1,10 @@
 package ru.datana.steel.mes.jms;
 
+import lombok.NonNull;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component("jmsProducer")
 public interface MesJmsProducer {
-    void sendOnError(String msg);
+    void sendOnError(@NonNull String msg);
+    void sendOnSuccess(@NonNull String msg);
 }

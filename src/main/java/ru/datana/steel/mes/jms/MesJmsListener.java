@@ -2,7 +2,6 @@ package ru.datana.steel.mes.jms;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.datana.steel.mes.config.AppConst;
@@ -22,7 +21,7 @@ import javax.jms.TextMessage;
 @Slf4j
 public class MesJmsListener implements MessageListener {
 
-    private final static String PREFIX_LOG = "[JMS] ";
+    private final static String PREFIX_LOG = "[JMS:Listener] ";
     private DatanaXmlValidator xmlValidator = DatanaXmlValidator.getInstance();
 
     @Autowired
@@ -30,6 +29,7 @@ public class MesJmsListener implements MessageListener {
 
     @Autowired
     private CallDbService callDbService;
+
     @PostConstruct
     protected void postConstruct() {
         log.info(PREFIX_LOG + "Запуск JMS-сервиса.");
@@ -46,23 +46,25 @@ public class MesJmsListener implements MessageListener {
         String prefix = PREFIX_LOG + "[onMessage]";
         String msg = null;
         String jmsDestination = null;
+        String errorMsg = null;
         try {
             jmsDestination = message.getJMSDestination().toString();
 
-            if (message instanceof TextMessage)
+            if (message instanceof TextMessage) {
                 msg = ((TextMessage) message).getText();
-            else
-                msg = "WARN: not text message, type message : " + message.getJMSType();
+                log.info(prefix + "input message = " + msg);
+                errorMsg = xmlValidator.validate(msg);
+            }
+            else {
+                errorMsg = "WARN: not text message, type message : " + message.getJMSType();
+            }
 
             log.info(prefix + "input message = " + msg);
-
-            DatanaXmlValidator.getInstance();
-            String errorMsg = xmlValidator.validate(msg);
-            if (!StringUtils.isEmpty(errorMsg)){
+            if (StringUtils.isEmpty(errorMsg)) {
+                String answer = callDbService.dbSave(msg);
+                jmsProducer.sendOnSuccess(answer);
+            } else {
                 jmsProducer.sendOnError(errorMsg);
-            }else
-            {
-                callDbService.dbSave(msg);
             }
         } catch (Exception e) {
             String errorMsg = String.format(AppConst.ERROR_LOG_PREFIX, jmsDestination, msg);

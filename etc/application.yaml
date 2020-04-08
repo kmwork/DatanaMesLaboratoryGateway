@@ -2,7 +2,8 @@ datana:
   activemq:
     brokerUrl: tcp://localhost:61616
     requestQueue: jmsFromMes
-    responseQueue: jmsFromMesToError
+    responseQueue: jmsResponseFromDatanaToMes
+    responseQueueOnError: jmsFromMesOnError
   global:
     ## просьба версию не менять
     appVersion: datana-mes-alfa-1

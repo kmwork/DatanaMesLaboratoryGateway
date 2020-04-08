@@ -36,7 +36,7 @@ public class CallDbServiceImpl implements CallDbService {
     public String dbSave(@NonNull String fromXml) {
         log.debug("[SQL:Save] data = " + fromXml);
         Query funcSave = entityManager.createNativeQuery(pgNativeSaveSQL);
-        funcSave.setParameter("fromJson", fromXml);
+        funcSave.setParameter("fromXml", fromXml);
         String toXml = funcSave.getResultList().get(0).toString();
         log.info("[SQL:Save] результат = " + toXml);
         return toXml;
