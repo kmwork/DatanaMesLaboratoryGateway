@@ -11,7 +11,7 @@ import org.springframework.jms.annotation.EnableJms;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.DefaultMessageListenerContainer;
 import org.springframework.jms.listener.MessageListenerContainer;
-import ru.datana.steel.mes.jms.MesJmsReceiver;
+import ru.datana.steel.mes.jms.MesJmsListener;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.MessageListener;
@@ -29,8 +29,7 @@ public class MesActiveMqSpringConfig {
     protected JmsProperties jmsProperties;
 
     @Autowired
-    @Qualifier("safeJmsListener")
-    protected MessageListener safeJmsListener;
+    protected MessageListener mesJmsListener;
 
     @Bean
     protected JmsTemplate jmsRequestTemplate(@Qualifier("activeMqJMSConnectionFactory") ConnectionFactory connectionFactory,
@@ -54,7 +53,7 @@ public class MesActiveMqSpringConfig {
         DefaultMessageListenerContainer listenerContainer = new DefaultMessageListenerContainer();
         listenerContainer.setConnectionFactory(connectionFactory);
         listenerContainer.setDestination(requestQueue);
-        listenerContainer.setMessageListener(safeJmsListener);
+        listenerContainer.setMessageListener(mesJmsListener);
         return listenerContainer;
     }
 
@@ -69,15 +68,9 @@ public class MesActiveMqSpringConfig {
         return new ActiveMQQueue(jmsProperties.getResponseQueue());
     }
 
-
-    @Autowired
-    @Qualifier("mesJmsReceiver")
-    protected MessageListener mesJmsReceiver;
-
-
     @Bean
     protected MessageListener mesJmsReceiver() {
-        return new MesJmsReceiver();
+        return new MesJmsListener();
     }
 
 }

@@ -10,13 +10,14 @@ datana:
     debug: true
     log:
       level: INFO
-  spring:
-    datasource:
-      driver-class: org.postgresql.Driver
-      jdbcUrl: jdbc:postgresql://localhost:5432/postgres
-      username: postgres
-      password: 1
-      schema: datalake
+  database-options:
+    postgresql-save-function: "select cast (datalake.mes_chemical_composition_save(cast(:fromXml as xml)) as text)"
+  datasource:
+    driver-class: org.postgresql.Driver
+    jdbcUrl: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 1
+    schema: datalake
 
 ### НИЖЕ НЕ РЕДАКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯМ !!!! ####
 spring:

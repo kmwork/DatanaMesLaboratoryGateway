@@ -1,6 +1,7 @@
 package ru.datana.steel.mes.jms;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.datana.steel.mes.config.AppConst;
 import ru.datana.steel.mes.xml.DatanaXmlValidator;
@@ -14,13 +15,15 @@ import javax.jms.TextMessage;
 /**
  * Сервис по JMS - точка входа в сервис по IBM-MQ или Apache ActiveMQ
  */
-@Component("safeJmsListener")
+@Component("mesJmsListener")
 @Slf4j
-public class MesJmsReceiver implements MessageListener {
+public class MesJmsListener implements MessageListener {
 
     private final static String PREFIX_LOG = "[JMS] ";
     private DatanaXmlValidator xmlValidator = DatanaXmlValidator.getInstance();
 
+    @Autowired
+    private MesJmsProducer jmsProducer;
     @PostConstruct
     protected void postConstruct() {
         log.info(PREFIX_LOG + "Запуск JMS-сервиса.");
@@ -48,7 +51,10 @@ public class MesJmsReceiver implements MessageListener {
             log.info(prefix + "input message = " + msg);
 
             DatanaXmlValidator.getInstance();
-            xmlValidator.validate(msg);
+            boolean isValid = xmlValidator.validate(msg);
+            if (!isValid){
+                jmsProducer.sendOnError("error-kostya");
+            }
         } catch (Exception e) {
             String errorMsg = String.format(AppConst.ERROR_LOG_PREFIX, jmsDestination, msg);
             log.error(errorMsg, e);
