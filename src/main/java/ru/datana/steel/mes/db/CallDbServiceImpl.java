@@ -1,5 +1,6 @@
 package ru.datana.steel.mes.db;
 
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,16 +29,16 @@ public class CallDbServiceImpl implements CallDbService {
 
     @PostConstruct
     private void init() {
-        log.trace("[SQL: Save] pgNativeSaveSQL = " + pgNativeSaveSQL);
+        log.debug("[SQL:Init:Save] pgNativeSaveSQL = " + pgNativeSaveSQL);
     }
 
     @Override
-    public String dbSave(String fromJson) throws SQLException {
-        log.trace("[SQL:Save] data = " + fromJson);
+    public String dbSave(@NonNull String fromXml) throws SQLException {
+        log.debug("[SQL:Save] data = " + fromXml);
         Query funcSave = entityManager.createNativeQuery(pgNativeSaveSQL);
-        funcSave.setParameter("fromJson", fromJson);
-        String toJson = funcSave.getResultList().get(0).toString();
-        log.trace("[SQL:Save] результат = " + toJson);
-        return toJson;
+        funcSave.setParameter("fromJson", fromXml);
+        String toXml = funcSave.getResultList().get(0).toString();
+        log.info("[SQL:Save] результат = " + toXml);
+        return toXml;
     }
 }

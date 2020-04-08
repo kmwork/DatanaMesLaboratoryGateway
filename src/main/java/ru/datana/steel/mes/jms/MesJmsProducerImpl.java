@@ -14,6 +14,6 @@ public class MesJmsProducerImpl implements MesJmsProducer{
     private String jmsResponseQueue;
 
     public void sendOnError(String msg){
-        jmsTemplate.convertAndSend(msg);
+        jmsTemplate.convertAndSend(jmsResponseQueue, msg);
     }
 }

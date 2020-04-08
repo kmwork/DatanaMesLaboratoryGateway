@@ -1,6 +1,7 @@
-package ru.datana.steel.mes.xml;
+package ru.datana.steel.mes.util;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.xml.sax.SAXException;
 import ru.datana.steel.mes.config.AppConst;
@@ -45,19 +46,27 @@ public class DatanaXmlValidator {
     }
 
 
-    public boolean validate(String xmlAsString) {
+    /**
+     * Валидация XML как строка
+     *
+     * @param xmlAsString
+     * @return null или текст ошибки
+     */
+    public String validate(@NonNull String xmlAsString) {
+        String errorMsg;
         try {
             Reader xmlReader = new StringReader(xmlAsString);
             StreamSource xmlSource = new StreamSource(xmlReader);
             validator.validate(xmlSource);
-            return true;
+            errorMsg = null;
         } catch (IOException ioEx) {
-            log.warn(AppConst.ERROR_LOG_PREFIX + "Ошибка при чтеннии сообщения xmlSource = " + xmlAsString, ioEx);
-            return false;
+            errorMsg = "IOException: Ошибка при чтеннии сообщения xmlSource = " + xmlAsString;
+            log.warn(AppConst.ERROR_LOG_PREFIX + errorMsg, ioEx);
         } catch (SAXException saxEx) {
-            log.warn(AppConst.ERROR_LOG_PREFIX + "Не валиный xml: ", saxEx.getLocalizedMessage());
-            return false;
+            errorMsg = "SAXException: Не валиный xml: " + saxEx.getLocalizedMessage();
+            log.error(AppConst.ERROR_LOG_PREFIX + errorMsg);
         }
+        return errorMsg;
     }
 
 }

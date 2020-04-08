@@ -1,10 +1,13 @@
 package ru.datana.steel.mes.jms;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.datana.steel.mes.config.AppConst;
-import ru.datana.steel.mes.xml.DatanaXmlValidator;
+import ru.datana.steel.mes.db.CallDbService;
+import ru.datana.steel.mes.util.DatanaXmlValidator;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -24,6 +27,9 @@ public class MesJmsListener implements MessageListener {
 
     @Autowired
     private MesJmsProducer jmsProducer;
+
+    @Autowired
+    private CallDbService callDbService;
     @PostConstruct
     protected void postConstruct() {
         log.info(PREFIX_LOG + "Запуск JMS-сервиса.");
@@ -51,9 +57,12 @@ public class MesJmsListener implements MessageListener {
             log.info(prefix + "input message = " + msg);
 
             DatanaXmlValidator.getInstance();
-            boolean isValid = xmlValidator.validate(msg);
-            if (!isValid){
-                jmsProducer.sendOnError("error-kostya");
+            String errorMsg = xmlValidator.validate(msg);
+            if (!StringUtils.isEmpty(errorMsg)){
+                jmsProducer.sendOnError(errorMsg);
+            }else
+            {
+                callDbService.dbSave(msg);
             }
         } catch (Exception e) {
             String errorMsg = String.format(AppConst.ERROR_LOG_PREFIX, jmsDestination, msg);
