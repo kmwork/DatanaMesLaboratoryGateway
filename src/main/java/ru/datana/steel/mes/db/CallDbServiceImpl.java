@@ -33,7 +33,7 @@ public class CallDbServiceImpl implements CallDbService {
     }
 
     @Override
-    public String dbSave(@NonNull String fromXml) throws SQLException {
+    public String dbSave(@NonNull String fromXml) {
         log.debug("[SQL:Save] data = " + fromXml);
         Query funcSave = entityManager.createNativeQuery(pgNativeSaveSQL);
         funcSave.setParameter("fromJson", fromXml);
