@@ -1,5 +1,6 @@
 package ru.datana.steel.mes.util;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import ru.datana.steel.mes.config.AppConst;
@@ -15,7 +16,7 @@ public class ExtSpringProfileUtil {
      *
      * @param springFile файл для YAML настроек
      */
-    public static void extConfigure(String springFile) {
+    public static void extConfigure(@NonNull String springFile) {
 
         // проверка что указано свойсто app.dir
         String configLocation = System.getProperty(AppConst.SYS_DIR_PROP); //get the default config directory location

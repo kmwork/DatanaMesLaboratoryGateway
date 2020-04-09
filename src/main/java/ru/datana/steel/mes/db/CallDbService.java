@@ -1,5 +1,7 @@
 package ru.datana.steel.mes.db;
 
+import lombok.NonNull;
+
 import java.sql.SQLException;
 
 /**
@@ -9,9 +11,9 @@ public interface CallDbService {
     /**
      * Сохранить через передачу JSON строки с данными дачиков в базу данных Postgresql
      *
-     * @param fromJson
+     * @param fromXml
      * @return
      * @throws SQLException
      */
-    String dbSave(String fromJson);
+    String dbSave(@NonNull String fromXml);
 }

@@ -25,7 +25,7 @@ public class MesJmsProducerImpl implements MesJmsProducer {
         send("Method:Отправка ошибок", queueOnError, xmlAsStringMsg);
     }
 
-    private void send(String methodName, String queue, String xmlAsStringMsg) {
+    private void send(@NonNull String methodName, @NonNull String queue, @NonNull String xmlAsStringMsg) {
         String prefix = PREFIX_LOG + "[Queue:" + queue + "] ";
         log.debug(prefix + " вызов метода " + methodName);
         jmsTemplate.convertAndSend(queue, xmlAsStringMsg);

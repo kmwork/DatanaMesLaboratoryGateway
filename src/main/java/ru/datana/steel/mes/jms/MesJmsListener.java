@@ -1,5 +1,6 @@
 package ru.datana.steel.mes.jms;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class MesJmsListener implements MessageListener {
     @Autowired
     private CallDbService callDbService;
 
+    private final XPathUtil xpathUtil = XPathUtil.getInstance();
+
     @PostConstruct
     protected void postConstruct() {
         log.info(PREFIX_LOG + "Запуск JMS-сервиса.");
@@ -42,9 +45,9 @@ public class MesJmsListener implements MessageListener {
     }
 
     @Override
-    public void onMessage(Message message) {
+    public void onMessage(@NonNull Message message) {
 
-        String prefix = PREFIX_LOG + "[onMessage]";
+        String prefix = PREFIX_LOG + "[onMessage] ";
         String msg = null;
         String jmsDestination = null;
         String errorMsg;
@@ -61,12 +64,15 @@ public class MesJmsListener implements MessageListener {
             }
 
             log.info(prefix + "input message = " + msg);
-            if (StringUtils.isEmpty(errorMsg)) {
+            boolean isValid = StringUtils.isEmpty(errorMsg);
+            String id = isValid ? xpathUtil.getIdByRequest(msg) : null;
+            if (StringUtils.isNotEmpty(id)) {
+                log.info(PREFIX_LOG + "ID полученного сообщения = " + id);
                 String answer = callDbService.dbSave(msg);
-                String status = XPathUtil.getStatusOfResponse(answer);
+                String status = xpathUtil.getStatusOfResponse(answer);
                 if (AppConst.SUCCESS_STATUS_OF_PG_SAVE.equalsIgnoreCase(status)) {
                     jmsProducer.sendOnSuccess(answer);
-                    log.info(AppConst.SUCCESS_LOG_PREFIX + "Сообщение обработано");
+                    log.info(AppConst.SUCCESS_LOG_PREFIX + "Сообщение обработано c Id = " + id);
                 } else {
                     log.warn(AppConst.ERROR_LOG_PREFIX + "Ошибка в хранимке, неуспешный статус = " + status);
                     jmsProducer.sendOnError(answer);

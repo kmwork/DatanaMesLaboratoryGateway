@@ -64,5 +64,12 @@ logging:
       datana: DEBUG
     sun: INFO
     javax: INFO
+  file:
+    name: ${app.dir}/client-logs/mes-gatemway.log
+    max-size: 16 MB
+    total-size-cap: 128 MB
+  pattern:
+    rolling-file-name:  ${app.dir}/archive-mes-logs/mes-gateway-archive.%d{yyyy-MM-dd}.%i.log
+
 
 
