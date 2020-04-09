@@ -13,5 +13,5 @@ public interface CallDbService {
      * @return
      * @throws SQLException
      */
-    String dbSave(String fromJson) throws SQLException;
+    String dbSave(String fromJson);
 }

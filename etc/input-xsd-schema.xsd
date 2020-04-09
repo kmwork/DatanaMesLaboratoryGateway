@@ -4,15 +4,60 @@
            xmlns:tns="http://datana.ru/publishing"
            elementFormDefault="unqualified"
 >
+    <xs:element name="MESChemicalCompositionSave" type="tns:MESChemicalCompositionSaveType"/>
+    <xs:element name="MESChemicalCompositionSaveResult" type="tns:MESChemicalCompositionSaveResultType"/>
 
+    <xs:complexType name="MESChemicalCompositionSaveResultType">
+        <xs:annotation>
+            <xs:documentation>Ответ с результатами сохранения хим состава</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="srcMessageID" type="tns:MessageIDType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="status" type="tns:StatusType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="errorMessage" type="tns:ErrorMessageType" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xs:element name="chemicalCompositionData" type="tns:ChemicalCompositionDataType"/>
+    <xs:simpleType name="ErrorMessageType">
+        <xs:annotation>
+            <xs:documentation>Сообщение об ошибке сохранения хим состава</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xs:complexType name="ChemicalCompositionDataType">
+    <xs:simpleType name="MessageIDType">
+        <xs:annotation>
+            <xs:documentation>Уникальный идентификатор сообщения</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="StatusType">
+        <xs:annotation>
+            <xs:documentation>>Статус сохранения результатов хим состава</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OK">
+                <xs:annotation>
+                    <xs:documentation>Без ошибок</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ERROR">
+                <xs:annotation>
+                    <xs:documentation>При сохранении были ошибки</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="MESChemicalCompositionSaveType">
         <xs:annotation>
             <xs:documentation>Наименование химического элемента или параметра и результат</xs:documentation>
         </xs:annotation>
         <xs:sequence>
+            <xs:element name="messageID" type="tns:MessageIDType" minOccurs="1" maxOccurs="1"/>
             <xs:element name="smeltingNumber" type="tns:SmeltingNumberType" minOccurs="1"/>
             <xs:element name="sampleNumber" type="tns:SampleNumberType" minOccurs="1"/>
             <xs:element name="samplingDatetime" type="tns:SamplingDatetimeType" minOccurs="1"/>
@@ -43,16 +88,17 @@
             <xs:documentation>Наименование химического элемента или параметра и результат</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="controlledElementName" type="tns:ControlledElementNameType" minOccurs="1"
+            <xs:element name="сontrolledElementName" type="tns:ControlledElementNameType" minOccurs="1"
                         nillable="false">
                 <xs:annotation>
                     <xs:documentation>>Наименование химического элемента или параметра</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="controlledElementValue" type="tns:ControlledElementValueType" minOccurs="1"
+            <xs:element name="сontrolledElementValue" type="tns:ControlledElementValueType" minOccurs="1"
                         nillable="false">
                 <xs:annotation>
-                    <xs:documentation>Результат анализа химического элемента или значение параметра</xs:documentation>
+                    <xs:documentation>Результат анализа химического элемента или значение параметра
+                    </xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>

@@ -29,7 +29,7 @@ public class MesJmsProducerImpl implements MesJmsProducer {
         String prefix = PREFIX_LOG + "[Queue:" + queue + "] ";
         log.debug(prefix + " вызов метода " + methodName);
         jmsTemplate.convertAndSend(queue, xmlAsStringMsg);
-        log.info(prefix + "Отправлен в очередь = {}, xmlAsStringMsg = ", queue, xmlAsStringMsg);
+        log.info(prefix + "Отправлен в очередь = {}, xmlAsStringMsg = {}", queue, xmlAsStringMsg);
     }
 
     @Override

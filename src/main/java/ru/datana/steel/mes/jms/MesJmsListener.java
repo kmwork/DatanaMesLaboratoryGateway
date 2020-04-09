@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.datana.steel.mes.config.AppConst;
 import ru.datana.steel.mes.db.CallDbService;
 import ru.datana.steel.mes.util.DatanaXmlValidator;
+import ru.datana.steel.mes.util.XPathUtil;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -62,7 +63,14 @@ public class MesJmsListener implements MessageListener {
             log.info(prefix + "input message = " + msg);
             if (StringUtils.isEmpty(errorMsg)) {
                 String answer = callDbService.dbSave(msg);
-                jmsProducer.sendOnSuccess(answer);
+                String status = XPathUtil.getStatusOfResponse(answer);
+                if (AppConst.SUCCESS_STATUS_OF_PG_SAVE.equalsIgnoreCase(status)) {
+                    jmsProducer.sendOnSuccess(answer);
+                    log.info(AppConst.SUCCESS_LOG_PREFIX + "Сообщение обработано");
+                } else {
+                    log.warn(AppConst.ERROR_LOG_PREFIX + "Ошибка в хранимке, не успешный статус = " + status);
+                    jmsProducer.sendOnError(answer);
+                }
             } else {
                 jmsProducer.sendOnError(errorMsg);
             }

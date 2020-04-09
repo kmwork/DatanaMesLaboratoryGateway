@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<tns:chemicalCompositionData xmlns:tns="http://datana.ru/publishing">
+<?xml version="1.0" encoding="utf-8"?>
+<tns:MESChemicalCompositionSave xmlns:tns="http://datana.ru/publishing">
+    <messageID>str1234</messageID>
     <smeltingNumber>str1234</smeltingNumber>
     <sampleNumber>str1234</sampleNumber>
     <samplingDatetime>2012-12-13T12:12:12</samplingDatetime>
@@ -8,8 +9,8 @@
     <unitName>str1234</unitName>
     <controlledElementsAnalysisResults>
         <controlledElementItem>
-            <controlledElementName>C</controlledElementName>
-            <controlledElementValue>123.45</controlledElementValue>
+            <сontrolledElementName>C</сontrolledElementName>
+            <сontrolledElementValue>123.45</сontrolledElementValue>
         </controlledElementItem>
     </controlledElementsAnalysisResults>
-</tns:chemicalCompositionData>
+</tns:MESChemicalCompositionSave>

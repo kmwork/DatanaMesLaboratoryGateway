@@ -16,4 +16,5 @@ public class AppConst {
     public static final String SUCCESS_LOG_PREFIX = "[App-Успешно] ";
     public static final String ERROR_LOG_PREFIX = "[App-Ошибка] ";
     public static final String APP_LOG_PREFIX = "[App-Danata] ";
+    public static final String SUCCESS_STATUS_OF_PG_SAVE = "OK";
 }
