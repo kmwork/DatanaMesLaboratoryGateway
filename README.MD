@@ -5,10 +5,12 @@
 ````
 задача в JIRA: https://jira.dds.lanit.ru/browse/NIOKR-50
 
-# генерация POJO по XML-Схемам
-````
-mvn clean jaxb2:xjc
-и разкомментировать строку <goal>xjc</goal> в pom.xml так как она опасная, ломает сборку, поэтому выключена 
-для этого нужно подложить новые xsd схемы в папку <путь к проекту >/src/main/xsd/*.xsd
-````        
+## сборка Maven 3 + OpenJDK 13
+```
+mvn clean compile package spring-boot:repackage 
+```
 
+## Как пользоваться для теста
+##### Шлюз слушает JMS запросы 
+    1) читает из папки app.dir (системное свойство Ява-приложении)
+    2) и ждет рест запросы

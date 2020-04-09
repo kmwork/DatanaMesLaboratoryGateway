@@ -68,7 +68,7 @@ public class MesJmsListener implements MessageListener {
                     jmsProducer.sendOnSuccess(answer);
                     log.info(AppConst.SUCCESS_LOG_PREFIX + "Сообщение обработано");
                 } else {
-                    log.warn(AppConst.ERROR_LOG_PREFIX + "Ошибка в хранимке, не успешный статус = " + status);
+                    log.warn(AppConst.ERROR_LOG_PREFIX + "Ошибка в хранимке, неуспешный статус = " + status);
                     jmsProducer.sendOnError(answer);
                 }
             } else {

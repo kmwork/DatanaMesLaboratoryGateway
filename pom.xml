@@ -5,16 +5,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ru.datana</groupId>
-    <artifactId>DatanaMesGatewayK8</artifactId>
+    <artifactId>DatanaMesGateway-K9</artifactId>
     <version>1-alfa</version>
     <packaging>jar</packaging>
+    <build>
+        <finalName>mes-gateway</finalName>
+    </build>
     <properties>
         <spring.boot.version>2.2.6.RELEASE</spring.boot.version>
         <maven.compiler.source>13</maven.compiler.source>
         <maven.compiler.target>13</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <activemq-broker-version>5.15.9</activemq-broker-version>
-        <app.main.class>ru.datana.steel.parser.ControllerS7XmlParserApp</app.main.class>
+        <app.main.class>ru.datana.steel.mes.DevJmsApp</app.main.class>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -78,35 +81,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <!-- плагин для герерации классов по схемам XSD-SCHEMA -->
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>jaxb2-maven-plugin</artifactId>
-                <version>2.5.0</version>
-
-                <executions>
-                    <execution>
-                        <goals>
-<!--                            <goal>xjc</goal>-->
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>javax.activation</groupId>
-                        <artifactId>javax.activation-api</artifactId>
-                        <version>1.2.0</version>
-                        <scope>runtime</scope>
-                    </dependency>
-                </dependencies>
-                <configuration>
-                    <packageName>ru.datana.steel.mes.xml.pojo</packageName>
-                    <sources>
-                        <source>${basedir}/src/main/resources/xsd-schema</source>
-                    </sources>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
