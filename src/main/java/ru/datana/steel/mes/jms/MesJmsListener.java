@@ -22,7 +22,7 @@ import javax.jms.TextMessage;
 public class MesJmsListener implements MessageListener {
 
     private final static String PREFIX_LOG = "[JMS:Listener] ";
-    private DatanaXmlValidator xmlValidator = DatanaXmlValidator.getInstance();
+    private final DatanaXmlValidator xmlValidator = DatanaXmlValidator.getInstance();
 
     @Autowired
     private MesJmsProducer jmsProducer;
@@ -46,7 +46,7 @@ public class MesJmsListener implements MessageListener {
         String prefix = PREFIX_LOG + "[onMessage]";
         String msg = null;
         String jmsDestination = null;
-        String errorMsg = null;
+        String errorMsg;
         try {
             jmsDestination = message.getJMSDestination().toString();
 

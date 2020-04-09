@@ -1,15 +1,8 @@
 datana:
-  activemq:
-    brokerUrl: tcp://localhost:61616
-    requestQueue: jmsFromMes
-    responseQueue: jmsResponseFromDatanaToMes
-    responseQueueOnError: jmsFromMesOnError
   global:
-    ## просьба версию не менять
-    appVersion: datana-mes-alfa-1
-    # уровень вывода логов
     debug: true
     log:
+      # уровень вывода логов
       level: INFO
   database-options:
     postgresql-save-function: "select cast (datalake.mes_chemical_composition_save(cast(:fromXml as xml)) as text)"
@@ -17,23 +10,25 @@ datana:
   spring:
     datasource:
       driver-class: org.postgresql.Driver
-      jdbcUrl: jdbc:postgresql://localhost:5432/postgres
+      jdbcUrl: "jdbc:postgresql://localhost:5432/datana"
       username: postgres
       password: 1
       schema: datalake
 
 ### НИЖЕ НЕ РЕДАКТИРОВАТЬ ПОЛЬЗОВАТЕЛЯМ !!!! ####
 spring:
-  application:
-    name: ${datana.global.appVersion}
+  main:
+    web-application-type: none
+    banner-mode: off
   datasource:
     driver-class: ${datana.spring.datasource.driver-class}
     driver-class-name: ${datana.spring.datasource.driver-class}
     hikari:
-      auto-commit: false
+      auto-commit: true
       connection-timeout: 60000
       maximum-pool-size: 5
       schema: ${datana.spring.datasource.schema}
+
     password: ${datana.spring.datasource.password}
     testWhileIdle: true
     url: ${datana.spring.datasource.jdbcUrl}
