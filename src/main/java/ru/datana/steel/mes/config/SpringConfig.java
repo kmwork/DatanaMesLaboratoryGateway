@@ -18,13 +18,9 @@ import javax.annotation.PostConstruct;
 @EnableTransactionManagement
 public class SpringConfig {
 
-    @Getter
-    @Setter
-    protected String appVersion;
-
     @PostConstruct
     protected void postConstruct() {
-        log.info("[Safe:CONFIG] APP VERSION = " + appVersion);
+        log.info("[Safe:CONFIG] APP VERSION = " + AppVersion.getDatanaAppVersion());
     }
 
 
