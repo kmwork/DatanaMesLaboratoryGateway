@@ -13,6 +13,9 @@ import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.*;
 
+/**
+ * Проверка на XSD схемы
+ */
 @Slf4j
 public class DatanaXmlValidator {
     private static final String PREFIX_LOG = "[XML-Validator] ";
@@ -60,10 +63,10 @@ public class DatanaXmlValidator {
             validator.validate(xmlSource);
             errorMsg = null;
         } catch (IOException ioEx) {
-            errorMsg = "IOException: Ошибка при чтеннии сообщения xmlSource = " + xmlAsString;
+            errorMsg = "IOException: Ошибка при чтении сообщения xmlSource = " + xmlAsString;
             log.warn(AppConst.ERROR_LOG_PREFIX + errorMsg, ioEx);
         } catch (SAXException saxEx) {
-            errorMsg = "SAXException: Не валиный xml: " + saxEx.getLocalizedMessage();
+            errorMsg = "SAXException: Не валидный xml: " + saxEx.getLocalizedMessage();
             log.error(AppConst.ERROR_LOG_PREFIX + errorMsg);
         }
         return errorMsg;

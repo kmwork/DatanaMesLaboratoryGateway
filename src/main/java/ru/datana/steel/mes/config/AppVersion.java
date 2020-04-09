@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+/**
+ * Чтение версии программы из ресурса в jar
+ * для контроля версии
+ */
 @Slf4j
 public class AppVersion {
     @Getter

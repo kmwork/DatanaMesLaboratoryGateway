@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.annotation.PostConstruct;
 
 /**
- * Загрузка application.yml общеее
+ * Загрузка application.yml общих настроек
  */
 @Configuration
 @ConfigurationProperties(prefix = "datana.global")

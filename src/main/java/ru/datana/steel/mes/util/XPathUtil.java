@@ -14,6 +14,9 @@ import javax.xml.xpath.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+/**
+ * Утилита по работе XPATH поиска в XML
+ */
 @Slf4j
 public class XPathUtil {
     private static final String XPATH_FOR_RESPONSE_STATUS = "/MESChemicalCompositionSaveResult/status";
@@ -25,12 +28,13 @@ public class XPathUtil {
     private static final XPathUtil instance = new XPathUtil();
 
     private XPathUtil() {
+        //подгружаем для ускорения вычисления xpath выражения
         XPath xPath = XPathFactory.newInstance().newXPath();
         try {
             xPathForStatus = xPath.compile(XPATH_FOR_RESPONSE_STATUS);
             xPathForId = xPath.compile(XPATH_FOR_REQUEST_ID);
         } catch (XPathExpressionException e) {
-            log.error("Ошибка инциализации класса " + this.getClass().getName(), e);
+            log.error("Ошибка инициализации класса " + this.getClass().getName(), e);
             System.exit(-200);
         }
     }

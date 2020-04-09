@@ -12,13 +12,13 @@ import java.util.Properties;
 public class ExtSpringProfileUtil {
 
     /**
-     * Настройка Spring-приложение из вышесенных во внешнюю папку etc настроек спринга
+     * Настройка Spring-приложение из вынесенных во внешнюю папку etc настроек спринга
      *
      * @param springFile файл для YAML настроек
      */
     public static void extConfigure(@NonNull String springFile) {
 
-        // проверка что указано свойсто app.dir
+        // проверка что указано свойство app.dir
         String configLocation = System.getProperty(AppConst.SYS_DIR_PROP); //get the default config directory location
         if (StringUtils.isEmpty(configLocation)) {
             log.error(AppConst.APP_LOG_PREFIX + "Путь к настройкам не указан по java.options по имени свойства =  " + AppConst.SYS_DIR_PROP);

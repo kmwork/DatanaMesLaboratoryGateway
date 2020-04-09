@@ -9,7 +9,7 @@ import java.sql.SQLException;
  */
 public interface CallDbService {
     /**
-     * Сохранить через передачу JSON строки с данными дачиков в базу данных Postgresql
+     * Сохранить через передачу JSON строки с данными датчиков в базу данных Postgresql
      *
      * @param fromXml
      * @return

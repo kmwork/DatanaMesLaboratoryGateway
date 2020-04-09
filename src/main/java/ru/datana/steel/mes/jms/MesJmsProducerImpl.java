@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
 
+/**
+ * Продюсер для отправки JMS сообщений
+ */
 @Slf4j
 @Service
 public class MesJmsProducerImpl implements MesJmsProducer {
@@ -14,9 +17,15 @@ public class MesJmsProducerImpl implements MesJmsProducer {
     @Autowired
     private JmsTemplate jmsTemplate;
 
+    /**
+     * Очередь для ошибок
+     */
     @Value("${datana.activemq.responseQueueOnError}")
     private String queueOnError;
 
+    /**
+     * Очередь для подтверждения успеха
+     */
     @Value("${datana.activemq.responseQueue}")
     private String queueForSuccess;
 

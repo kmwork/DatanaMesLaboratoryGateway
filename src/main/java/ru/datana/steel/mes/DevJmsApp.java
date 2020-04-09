@@ -10,7 +10,7 @@ import ru.datana.steel.mes.config.AppConst;
 import ru.datana.steel.mes.util.ExtSpringProfileUtil;
 
 /**
- * Тестове приложение для ActiveMQ (внешний брокер) + Oracle СУБД
+ * Шлюз MES приложение для ActiveMQ (внешний брокер) + PostgreSQL СУБД
  */
 @SpringBootApplication
 @EnableJms

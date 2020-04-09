@@ -17,7 +17,7 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 /**
- * Сервис по JMS - точка входа в сервис по IBM-MQ или Apache ActiveMQ
+ * Сервис по JMS - точка входа в сервис по Apache ActiveMQ
  */
 @Component("mesJmsListener")
 @Slf4j
