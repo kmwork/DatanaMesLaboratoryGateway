@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tns:MESChemicalCompositionSave xmlns:tns="http://datana.ru/publishing">
-    <messageID>str1234</messageID>
+    <messageID>8c28810c-d867-4b3f-a6af-ec3541414741--uuid</messageID>
     <smeltingNumber>str1234</smeltingNumber>
     <sampleNumber>str1234</sampleNumber>
     <samplingDatetime>2012-12-13T12:12:12</samplingDatetime>
