@@ -122,7 +122,7 @@ try {
             sh "docker create \"$env.constImageDocker\""
 
             //kostya-temp
-            sh "docker run --rm -d -p 9999:8080 \"$env.constImageDocker\""
+            sh "docker run --rm -d -p 9990:61616 \"$env.constImageDocker\""
         }
 
         stage('step-6: Docker pull') {
