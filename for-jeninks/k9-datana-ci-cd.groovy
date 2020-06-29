@@ -8,11 +8,13 @@ env.constMVN_HOME = '/home/lin/apps/apache-maven-3.5.4'
 env.constJAVA_HOME = '/home/lin/apps/jdk13'
 env.constDockerDomain = "registry.hub.docker.com"
 env.constDockerRegistry = "https://$env.constDockerDomain"
+env.constExtPort = 9990
+env.constInnerPort = 61616
 
 env.constDockerName = "kmtemp"
 env.constDockerTag = "mes_jms"
 env.constDockerImageVersion = "3"
-env.constImageDocker="$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
+env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
 env.constDockerRegistryLogin = "kmtemp";
 
@@ -122,7 +124,7 @@ try {
             sh "docker create \"$env.constImageDocker\""
 
             //kostya-temp
-            sh "docker run --rm -d -p 9990:61616 \"$env.constImageDocker\""
+            sh "docker run --rm -d -p $env.constExtPort:$env.constInnerPort \"$env.constImageDocker\""
         }
 
         stage('step-6: Docker pull') {
