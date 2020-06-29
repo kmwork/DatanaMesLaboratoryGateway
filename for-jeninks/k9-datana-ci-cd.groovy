@@ -55,7 +55,8 @@ env.Version = "0.0.${BUILD_NUMBER}"
 env.constJiraURL = "https://jira.dds.lanit.ru/browse/"
 
 /**
- * Собрает информацию о коммитах
+ * Собирает информацию о коммитах
+ * (писал Даниил)
  * @param passedBuilds
  * @param build
  * @return
@@ -67,10 +68,19 @@ def lastSuccessfulBuild(passedBuilds, build) {
     }
 }
 
+/**
+ * Отправка сообщения в телеграм через бот
+ * @param msg текст сообщения для телеграм
+ * @return
+ */
 def sendTelegram(String msg) {
     sh "/usr/bin/curl -X POST  \"${env.constTelegramURL}\" -d \"text=${msg}\""
 }
 
+/**
+ * Собирает информацию о коммитах
+ * (писал Даниил)
+ */
 @NonCPS
 def getChangeLog(passedBuilds) {
     def log = ""
@@ -86,6 +96,8 @@ def getChangeLog(passedBuilds) {
                 def commentСut = comment.replaceAll("${env.constJiraURL}", "")
                 def commentСut2 = commentСut
                 def urls = ""
+
+                //вырезается имя задачи по регулярному выражению NKR--XXXX -- где XXX - номер задача в JIRA
                 commentСut.eachMatch("NKR-[0-9]+") {
                     ch ->
                         urls += '<a href=\\"' + "\"${env.constJiraURL}${ch}\"" + '\\">' + "${ch}</a> "
@@ -104,6 +116,9 @@ def getChangeLog(passedBuilds) {
     return log;
 }
 
+/**
+ * Тело Pipeline
+ */
 try {
     node {
         stage('step-1: Init') {
