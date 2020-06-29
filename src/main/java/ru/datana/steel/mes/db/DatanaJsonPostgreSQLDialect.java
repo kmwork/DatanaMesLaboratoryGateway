@@ -11,11 +11,12 @@ import java.sql.Types;
  */
 public class DatanaJsonPostgreSQLDialect extends PostgreSQL10Dialect {
 
+    private static final String TAG = "jsonb";
     public DatanaJsonPostgreSQLDialect() {
         super();
-        this.registerColumnType(Types.JAVA_OBJECT, "jsonb");
-        this.registerColumnType(Types.OTHER, "jsonb");
-        this.registerHibernateType(Types.JAVA_OBJECT, "jsonb");
-        this.registerHibernateType(Types.OTHER, "jsonb");
+        this.registerColumnType(Types.JAVA_OBJECT, TAG);
+        this.registerColumnType(Types.OTHER, TAG);
+        this.registerHibernateType(Types.JAVA_OBJECT, TAG);
+        this.registerHibernateType(Types.OTHER, TAG);
     }
 }
