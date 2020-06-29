@@ -1,6 +1,8 @@
 datana:
   activemq:
-    brokerUrl: tcp://localhost:61616
+    ###brokerUrl: tcp://localhost:61616
+    brokerUrl: tcp://172.29.40.42:61616
+
     requestQueue: jmsFromMes
     responseQueue: jmsResponseFromDatanaToMes
     responseQueueOnError: jmsFromMesToError
@@ -70,6 +72,4 @@ logging:
     total-size-cap: 128 MB
   pattern:
     rolling-file-name:  ${app.dir}/archive-mes-logs/mes-gateway-archive.%d{yyyy-MM-dd}.%i.log
-
-
 
