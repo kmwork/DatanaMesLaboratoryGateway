@@ -1,28 +1,65 @@
 /** пример Jenkins сборки PipeLine **/
 /** сделано по JIRA задаче : https://jira.dds.lanit.ru/browse/NKR-465 **/
 
+//ветка git проекта
 env.constGitBranch = 'DatanaMesLaboratoryGateway'
+
+// gitlab рапозитарий датаны
 env.constGitUrl = 'git@gitlab.dds.lanit.ru:mmk_niokr/tools.git'
+
+//наименование аккаунта на гит
 env.constGitCredentialsId = 'kostya5'
+
+//путь где установлен мавен
 env.constMVN_HOME = '/home/lin/apps/apache-maven-3.5.4'
+
+//путь где ява
 env.constJAVA_HOME = '/home/lin/apps/jdk13'
+
+// nexus-репозитарий под докеры
 env.constDockerDomain = "172.29.40.56:8083"
+
+// url для авторизации для nexus репозитарий
 env.constDockerRegistry = "http://$env.constDockerDomain/"
+
+//внешний порт для докера
 env.constExtPort = 9990
+// рабочий порт явы-приложения внутри докера
 env.constInnerPort = 61616
 
+//имя докер образа
 env.constDockerName = "k9_mes_gataway_demo"
+
+//тег докера образа
 env.constDockerTag = "mes_jms"
+
+//версия приложения (докера)
 env.constDockerImageVersion = "3"
+
+// полное имя докер образа с учетом репозитария
 env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
+//логин для авторизации на nexus репозиторий
 env.constDockerRegistryLogin = "robot-developer"
 
+// токен для доступа в телеграм канал для бота который пишет сообщения о факте начало и окончания сборки
 env.constTelegramURL = "https://api.telegram.org/bot1180854473:AAG1BHnbcM4oRRZW2-DKbZMYD2WqkDtUesU/sendMessage?chat_id=-1001325011128&parse_mode=HTML"
+
+//имя проека jenkins
 env.allJob = JOB_NAME
+
+// номер собрки в jenkins
 env.Version = "0.0.${BUILD_NUMBER}"
+
+//url для ссылок по задачам из коммитов
 env.constJiraURL = "https://jira.dds.lanit.ru/browse/"
 
+/**
+ * Собрает информацию о коммитах
+ * @param passedBuilds
+ * @param build
+ * @return
+ */
 def lastSuccessfulBuild(passedBuilds, build) {
     if ((build != null) && (build.result != 'SUCCESS')) {
         passedBuilds.add(build)
