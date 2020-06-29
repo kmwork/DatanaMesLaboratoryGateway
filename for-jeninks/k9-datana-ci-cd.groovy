@@ -103,9 +103,13 @@ def getChangeLog(passedBuilds) {
                         urls += '<a href=\\"' + "\"${env.constJiraURL}${ch}\"" + '\\">' + "${ch}</a> "
                         commentСut2 = commentСut2.replaceAll("${ch}", "")
                 }
+                //для отладки
                 echo "Comment: ${commentСut2}"
+
+                //ссылка на задачу в JRIA (она может быть пустой если нет задачи в описании коммита)
                 echo "Tasks: ${urls}"
 
+                //склейка сообщения из несколько комментариев по каммитам
                 log += "${j + 1}. by ${entry.author} on ${new Date(entry.timestamp)}\nComment: ${commentСut2} \nTask: ${urls}\n"
 
 
@@ -122,9 +126,13 @@ def getChangeLog(passedBuilds) {
 try {
     node {
         stage('step-1: Init') {
+            //очистка от старой сборки
             cleanWs()
+
+            //чтение гитхаба
             checkout([$class: 'GitSCM', branches: [[name: env.constGitBranch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: env.constGitCredentialsId, url: env.constGitUrl]]])
 
+            //путь на мавен и яву для запуска в SHELL-Linux
             env.PATH = "$env.constMVN_HOME/bin:$env.constJAVA_HOME/bin:$PATH"
             passedBuilds = []
             lastSuccessfulBuild(passedBuilds, currentBuild);
@@ -134,8 +142,11 @@ try {
                 changeLog = 'нет изменений'
             }
 
+            //отправка о начале собрки в телеграм
             sendTelegram("Начинаю сборку:  ${allJob}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
 
+
+            //для отладки
             echo "[PARAM] PATH=$PATH"
             echo "-----------------------------------"
             echo sh(script: 'env|sort', returnStdout: true)
@@ -143,55 +154,67 @@ try {
         }
 
         stage('step-2: Build by maven') {
+            //сборка проекта
             sh "mvn clean compile package spring-boot:repackage"
         }
         stage('step-3: Docker remove') {
-            //sh "docker container prune -f"
             try {
+                //остановка докер контейнеров
                 sh '''#!/bin/bash -xe
                     echo "for name = ${constDockerTag}"
                     echo "[cmd] = docker ps | grep ${constDockerTag} | awk '{print $1}' | xargs docker stop"
                     docker ps | grep ${constDockerTag} | awk '{print $1}' | xargs docker stop
                 '''
             } catch (e) {
+                //если ошибка то "глуши ошибку так как контейнеров может  не быть, если в первый запуск
                 echo "[#1]stop docker with error : " + e
             }
 
             try {
+                // удаление всех докер образов
                 sh '''#!/bin/bash -xe
                     echo "[cmd] = docker images | grep ${constDockerTag} | awk '{print $3}' | xargs docker rmi -f"
                     docker images | grep ${constDockerTag} | awk '{print $3}' | xargs docker rmi -f
                 '''
             } catch (e) {
+                //возможна ошибка если докер нет (в первый запуск)
                 echo "[#2]remove docker with error : " + e
             }
         }
 
 
         stage('step-4: Docker build') {
+            //сборка докера и установка тега-метки на образ
             sh "docker build --tag=$env.constImageDocker ."
         }
 
         stage('step-5: Docker create') {
+            //содание докально докер контейнера в докер машине
             sh "docker create \"$env.constImageDocker\""
 
-            //kostya-temp
+            //запуск докера "в бой"
             sh "docker run --rm -d -p $env.constExtPort:$env.constInnerPort \"$env.constImageDocker\""
         }
 
         stage('step-6: Docker push') {
+            //авторизация в nexus (пароль на nexus читается из файла на локальном ПК)
             sh "cat /home/lin/apps/datana-docker-secret/password-nexus-datana.txt | docker login --password-stdin --username=${env.constDockerRegistryLogin} ${env.constDockerRegistry}"
+
+            //публикация докер контейнера в nexus
             sh "docker push $env.constImageDocker"
         }
 
 
         stage('step-7: Telegram step') {
+            //отправка сообщения в телеграм об успешной сборке
             sendTelegram("Сборка завершена ${env.allJob}. build ${env.BUILD_NUMBER}")
         }
     }
 
 
 } catch (e) {
+
+    // перехват ошибкой для отправки в телеграм о аварии при сборке
     currentBuild.result = "FAILED"
     node {
         sendTelegram("Сборка сломалась ${env.allJob}. build ${env.BUILD_NUMBER}")
