@@ -7,16 +7,16 @@ env.constGitCredentialsId = 'kostya5'
 env.constMVN_HOME = '/home/lin/apps/apache-maven-3.5.4'
 env.constJAVA_HOME = '/home/lin/apps/jdk13'
 env.constDockerDomain = "registry.hub.docker.com"
-env.constDockerRegistry = "https://$env.constDockerDomain"
+env.constDockerRegistry = "http://172.29.40.56:8081/#browse/search/docker"
 env.constExtPort = 9990
 env.constInnerPort = 61616
 
-env.constDockerName = "kmtemp"
+env.constDockerName = "K9_MesGatawayDemo"
 env.constDockerTag = "mes_jms"
 env.constDockerImageVersion = "3"
 env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
-env.constDockerRegistryLogin = "kmtemp";
+env.constDockerRegistryLogin = "robot-developer";
 
 env.constTelegramURL = "https://api.telegram.org/bot1180854473:AAG1BHnbcM4oRRZW2-DKbZMYD2WqkDtUesU/sendMessage?chat_id=-1001325011128&parse_mode=HTML"
 env.allJob = JOB_NAME;
@@ -128,7 +128,7 @@ try {
         }
 
         stage('step-6: Docker pull') {
-            sh "cat /home/lin/apps/datana-docker-secret/rep-password.txt | docker login --password-stdin --username=${env.constDockerRegistryLogin} ${env.constDockerRegistry}"
+            sh "cat /home/lin/apps/datana-docker-secret/password-nexus-datana.txt | docker login --password-stdin --username=${env.constDockerRegistryLogin} ${env.constDockerRegistry}"
             sh "docker push $env.constImageDocker"
         }
 
