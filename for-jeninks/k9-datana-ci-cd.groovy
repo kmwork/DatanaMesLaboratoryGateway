@@ -4,7 +4,7 @@
 //ветка git проекта
 env.constGitBranch = 'DatanaMesLaboratoryGateway'
 
-// gitlab рапозитарий датаны
+// gitlab репозитарий датаны
 env.constGitUrl = 'git@gitlab.dds.lanit.ru:mmk_niokr/tools.git'
 
 //наименование аккаунта на гит
@@ -45,10 +45,10 @@ env.constDockerRegistryLogin = "robot-developer"
 // токен для доступа в телеграм канал для бота который пишет сообщения о факте начало и окончания сборки
 env.constTelegramURL = "https://api.telegram.org/bot1180854473:AAG1BHnbcM4oRRZW2-DKbZMYD2WqkDtUesU/sendMessage?chat_id=-1001325011128&parse_mode=HTML"
 
-//имя проека jenkins
+//имя проекта jenkins
 env.allJob = JOB_NAME
 
-// номер собрки в jenkins
+// номер сборки в jenkins
 env.Version = "0.0.${BUILD_NUMBER}"
 
 //url для ссылок по задачам из коммитов
@@ -142,7 +142,7 @@ try {
                 changeLog = 'нет изменений'
             }
 
-            //отправка о начале собрки в телеграм
+            //отправка о начале сборки в телеграм
             sendTelegram("Начинаю сборку:  ${allJob}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
 
 
@@ -189,7 +189,7 @@ try {
         }
 
         stage('step-5: Docker create') {
-            //содание докально докер контейнера в докер машине
+            //создание локально докер контейнера в докер машине
             sh "docker create \"$env.constImageDocker\""
 
             //запуск докера "в бой"
