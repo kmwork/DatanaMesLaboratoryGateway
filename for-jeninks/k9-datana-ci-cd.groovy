@@ -7,11 +7,11 @@ env.constGitCredentialsId = 'kostya5'
 env.constMVN_HOME = '/home/lin/apps/apache-maven-3.5.4'
 env.constJAVA_HOME = '/home/lin/apps/jdk13'
 env.constDockerDomain = "registry.hub.docker.com"
-env.constDockerRegistry = "http://172.29.40.56:8081/#browse/search/docker"
+env.constDockerRegistry = "http://172.29.40.56:8081/repository/maven-snapshots/"
 env.constExtPort = 9990
 env.constInnerPort = 61616
 
-env.constDockerName = "K9_MesGatawayDemo"
+env.constDockerName = "k9_mes_gataway_demo"
 env.constDockerTag = "mes_jms"
 env.constDockerImageVersion = "3"
 env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
