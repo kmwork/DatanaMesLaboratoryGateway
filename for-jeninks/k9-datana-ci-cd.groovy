@@ -16,10 +16,10 @@ env.constDockerTag = "mes_jms"
 env.constDockerImageVersion = "3"
 env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
-env.constDockerRegistryLogin = "robot-developer";
+env.constDockerRegistryLogin = "robot-developer"
 
 env.constTelegramURL = "https://api.telegram.org/bot1180854473:AAG1BHnbcM4oRRZW2-DKbZMYD2WqkDtUesU/sendMessage?chat_id=-1001325011128&parse_mode=HTML"
-env.allJob = JOB_NAME;
+env.allJob = JOB_NAME
 env.Version = "0.0.${BUILD_NUMBER}"
 env.constJiraURL = "https://jira.dds.lanit.ru/browse/"
 
