@@ -6,8 +6,8 @@ env.constGitUrl = 'git@gitlab.dds.lanit.ru:mmk_niokr/tools.git'
 env.constGitCredentialsId = 'kostya5'
 env.constMVN_HOME = '/home/lin/apps/apache-maven-3.5.4'
 env.constJAVA_HOME = '/home/lin/apps/jdk13'
-env.constDockerDomain = "registry.hub.docker.com"
-env.constDockerRegistry = "http://172.29.40.56:8081/repository/maven-snapshots/"
+env.constDockerDomain = "172.29.40.56:8083"
+env.constDockerRegistry = "http://$env.constDockerDomain/"
 env.constExtPort = 9990
 env.constInnerPort = 61616
 
@@ -127,7 +127,7 @@ try {
             sh "docker run --rm -d -p $env.constExtPort:$env.constInnerPort \"$env.constImageDocker\""
         }
 
-        stage('step-6: Docker pull') {
+        stage('step-6: Docker push') {
             sh "cat /home/lin/apps/datana-docker-secret/password-nexus-datana.txt | docker login --password-stdin --username=${env.constDockerRegistryLogin} ${env.constDockerRegistry}"
             sh "docker push $env.constImageDocker"
         }
