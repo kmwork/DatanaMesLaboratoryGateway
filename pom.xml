@@ -76,15 +76,11 @@
 
     </dependencies>
 
-<!--    <scm>-->
-<!--        <url>https://stash.ca.sbrf.ru/projects/USV/repos/cod99-microservices</url>-->
-<!--        <connection>scm:git:https://stash.ca.sbrf.ru/scm/usv/cod99-microservices.git</connection>-->
-<!--    </scm>-->
 
     <scm>
-        <connection>scm:git:http://localhost:9080/scm/git/kostya-scm-test</connection>
+        <connection>scm:git:http://172.29.15.88:6060/scm/git/kostya-k9-scm-demo</connection>
         <tag>HEAD</tag>
-        <url>http://localhost:9080/scm/git/kostya-scm-test</url>
+        <url>http://172.29.15.88:6060/scm/git/kostya-k9-scm-demo</url>
     </scm>
 
     <build>
