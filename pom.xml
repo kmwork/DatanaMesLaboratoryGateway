@@ -76,9 +76,43 @@
 
     </dependencies>
 
+<!--    <scm>-->
+<!--        <url>https://stash.ca.sbrf.ru/projects/USV/repos/cod99-microservices</url>-->
+<!--        <connection>scm:git:https://stash.ca.sbrf.ru/scm/usv/cod99-microservices.git</connection>-->
+<!--    </scm>-->
+
+    <scm>
+        <connection>scm:git:http://localhost:9080/scm/git/kostya-scm-test</connection>
+        <tag>HEAD</tag>
+        <url>http://localhost:9080/scm/git/kostya-scm-test</url>
+    </scm>
+
     <build>
         <finalName>mes-gateway</finalName>
         <plugins>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>buildnumber-maven-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <buildNumberPropertiesFileLocation>${project.basedir}/buildNumber.properties
+                    </buildNumberPropertiesFileLocation>
+                    <format>{0,number}</format>
+                    <items>
+                        <item>buildNumber</item>
+                    </items>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -91,6 +125,33 @@
                         <configuration>
                             <classifier>spring-boot</classifier>
                             <mainClass>${app.main.class}</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/deploy</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>image-stream.yml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
