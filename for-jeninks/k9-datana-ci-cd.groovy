@@ -48,12 +48,19 @@ env.constTelegramURL = "https://api.telegram.org/bot1180854473:AAG1BHnbcM4oRRZW2
 //имя проекта jenkins
 env.allJob = JOB_NAME
 
-// номер сборки в jenkins
-env.Version = "0.0.${BUILD_NUMBER}"
-
 //url для ссылок по задачам из коммитов
 env.constJiraURL = "https://jira.dds.lanit.ru/browse/"
 
+// номер сборки в jenkins
+env.constDatanaVersion = "-1"
+
+@NonCPS
+def loadProperties(Properties properties) {
+    File propertiesFile = new File("$WORKSPACE/buildNumber.properties")
+    propertiesFile.withInputStream {
+        properties.load(it)
+    }
+}
 /**
  * Собирает информацию о коммитах
  * (писал Даниил)
@@ -132,6 +139,14 @@ try {
             //чтение гитхаба
             checkout([$class: 'GitSCM', branches: [[name: env.constGitBranch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: env.constGitCredentialsId, url: env.constGitUrl]]])
 
+            echo "[#0 file] $WORKSPACE/buildNumber.properties"
+
+            Properties properties = new Properties()
+            loadProperties(properties)
+
+            // номер сборки в jenkins
+            env.constDatanaVersion = properties.buildNumber
+
             //путь на мавен и яву для запуска в SHELL-Linux
             env.PATH = "$env.constMVN_HOME/bin:$env.constJAVA_HOME/bin:$PATH"
             passedBuilds = []
@@ -143,7 +158,7 @@ try {
             }
 
             //отправка о начале сборки в телеграм
-            sendTelegram("Начинаю сборку:  ${allJob}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
+            sendTelegram("Начинаю сборку:  ${allJob}. Version ${constDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
 
 
             //для отладки
@@ -207,7 +222,7 @@ try {
 
         stage('step-7: Telegram step') {
             //отправка сообщения в телеграм об успешной сборке
-            sendTelegram("Сборка завершена ${env.allJob}. build ${env.BUILD_NUMBER}")
+            sendTelegram("Сборка завершена ${env.allJob}. Version ${constDatanaVersion}. build ${env.BUILD_NUMBER}")
         }
     }
 
@@ -217,7 +232,7 @@ try {
     // перехват ошибкой для отправки в телеграм о аварии при сборке
     currentBuild.result = "FAILED"
     node {
-        sendTelegram("Сборка сломалась ${env.allJob}. build ${env.BUILD_NUMBER}")
+        sendTelegram("Сборка сломалась ${env.allJob}.Version ${constDatanaVersion}. build ${env.BUILD_NUMBER}")
     }
     throw e
 }
