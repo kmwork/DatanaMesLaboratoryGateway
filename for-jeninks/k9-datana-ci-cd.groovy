@@ -185,7 +185,7 @@ try {
 
         stage('step-4: Docker build') {
             //сборка докера и установка тега-метки на образ
-            sh "docker build --tag=$env.constImageDocker ."
+            sh "docker build --tag=$env.constImageDocker --file ./target/Dockerfile ."
         }
 
         stage('step-5: Docker create') {
