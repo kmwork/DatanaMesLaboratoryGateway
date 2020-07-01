@@ -145,7 +145,8 @@ try {
             loadProperties(properties)
 
             // номер сборки в jenkins
-            env.constDatanaVersion = properties.buildNumber
+            env.constDatanaVersion = properties.fixMajorMinor + "." + properties.buildNumber
+
 
             //путь на мавен и яву для запуска в SHELL-Linux
             env.PATH = "$env.constMVN_HOME/bin:$env.constJAVA_HOME/bin:$PATH"
