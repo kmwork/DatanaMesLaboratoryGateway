@@ -5,7 +5,7 @@ import ru.datana.groovy.jenkins.JenkinsDatanaCommon
 /** пример Jenkins сборки PipeLine **/
 /** сделано по JIRA задаче : https://jira.dds.lanit.ru/browse/NKR-465 **/
 
-datanaCommons = new JenkinsDatanaCommon()
+def datanaCommons = new JenkinsDatanaCommon()
 //ветка git проекта
 env.constGitBranch = 'DatanaMesLaboratoryGateway'
 
@@ -44,7 +44,7 @@ try {
             echo "[#0 file] $WORKSPACE/buildNumber.properties"
 
             Properties properties = new Properties()
-            loadProperties(properties)
+            datanaCommons.loadProperties(properties)
 
             // номер сборки в jenkins
             datanaCommons.constDatanaVersion = properties.fixMajorMinor + "." + properties.buildNumber
@@ -54,15 +54,15 @@ try {
             env.PATH = "$datanaCommons.constMVN_HOME/bin:$datanaCommons.constJAVA_HOME/bin:$PATH"
             echo "[PARAM] PATH=$PATH"
             passedBuilds = []
-            lastSuccessfulBuild(passedBuilds, currentBuild);
+            datanaCommons.lastSuccessfulBuild(passedBuilds, currentBuild);
 
-            def changeLog = getChangeLog(passedBuilds)
+            def changeLog = datanaCommons.getChangeLog(passedBuilds)
             if (changeLog.trim() == '') {
                 changeLog = 'нет изменений'
             }
 
             //отправка о начале сборки в телеграм
-            sendTelegram("Начинаю сборку:  ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
+            datanaCommons.sendTelegram("Начинаю сборку:  ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
 
 
             //для отладки
@@ -135,7 +135,7 @@ try {
     // перехват ошибки для отправки в телеграм о аварии при сборке
     currentBuild.result = "FAILED"
     node {
-        sendTelegram("Сборка сломалась ${datanaCommons.allJob}.Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
+        datanaCommons.sendTelegram("Сборка сломалась ${datanaCommons.allJob}.Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
     }
     throw e
 }
