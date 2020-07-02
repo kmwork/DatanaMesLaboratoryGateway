@@ -5,7 +5,7 @@ import ru.datana.groovy.jenkins.JenkinsDatanaCommon
 /** пример Jenkins сборки PipeLine **/
 /** сделано по JIRA задаче : https://jira.dds.lanit.ru/browse/NKR-465 **/
 
-env.datanaCommons = new JenkinsDatanaCommon()
+datanaCommons = new JenkinsDatanaCommon()
 //ветка git проекта
 env.constGitBranch = 'DatanaMesLaboratoryGateway'
 
