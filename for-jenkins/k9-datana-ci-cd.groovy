@@ -80,20 +80,20 @@ try {
         }
 
         stage('step-4: Docker build') {
-            dockerBuild(env.constImageDocker)
+            datanaCommons.dockerBuild(env.constImageDocker)
         }
 
         stage('step-5: Docker create') {
-            dockerCreate(env.constImageDocker, $env.constExtPort, $env.constInnerPort)
+            datanaCommons.dockerCreate(env.constImageDocker, $env.constExtPort, $env.constInnerPort)
         }
 
         stage('step-6: Docker push') {
-            dockerCreate($env.constImageDocker)
+            datanaCommons.dockerCreate($env.constImageDocker)
         }
 
         stage('step-7: Telegram step') {
             //отправка сообщения в телеграм об успешной сборке
-            sendTelegram("Сборка завершена ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
+            datanaCommons.sendTelegram("Сборка завершена ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
         }
     }
 
