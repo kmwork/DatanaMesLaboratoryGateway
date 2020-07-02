@@ -39,7 +39,7 @@ try {
             cleanWs()
 
             //чтение гитхаба
-            checkout([$class: 'GitSCM', branches: [[name: env.constGitBranch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: env.constGitCredentialsId, url: env.constGitUrl]]])
+            checkout([$class: 'GitSCM', branches: [[name: datanaCommons.constGitBranch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: datanaCommons.constGitCredentialsId, url: env.constGitUrl]]])
 
             echo "[#0 file] $WORKSPACE/buildNumber.properties"
 
@@ -47,7 +47,7 @@ try {
             loadProperties(properties)
 
             // номер сборки в jenkins
-            env.constDatanaVersion = properties.fixMajorMinor + "." + properties.buildNumber
+            datanaCommons.constDatanaVersion = properties.fixMajorMinor + "." + properties.buildNumber
 
 
             //путь на мавен и яву для запуска в SHELL-Linux
@@ -62,7 +62,7 @@ try {
             }
 
             //отправка о начале сборки в телеграм
-            sendTelegram("Начинаю сборку:  ${allJob}. Version ${constDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
+            sendTelegram("Начинаю сборку:  ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
 
 
             //для отладки
@@ -125,7 +125,7 @@ try {
 
         stage('step-7: Telegram step') {
             //отправка сообщения в телеграм об успешной сборке
-            sendTelegram("Сборка завершена ${env.allJob}. Version ${constDatanaVersion}. build ${env.BUILD_NUMBER}")
+            sendTelegram("Сборка завершена ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
         }
     }
 
@@ -135,7 +135,7 @@ try {
     // перехват ошибки для отправки в телеграм о аварии при сборке
     currentBuild.result = "FAILED"
     node {
-        sendTelegram("Сборка сломалась ${env.allJob}.Version ${constDatanaVersion}. build ${env.BUILD_NUMBER}")
+        sendTelegram("Сборка сломалась ${datanaCommons.allJob}.Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
     }
     throw e
 }
