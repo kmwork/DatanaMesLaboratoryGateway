@@ -1,8 +1,10 @@
 @Library('JenkinsDatanaCommon@1.0')
-import ru.datana.JenkinsDatanaCommon
+import ru.datana.groovy.jenkins.JenkinsDatanaCommon
+
 /** пример Jenkins сборки PipeLine **/
 /** сделано по JIRA задаче : https://jira.dds.lanit.ru/browse/NKR-465 **/
 
+env.datanaCommons = new JenkinsDatanaCommon()
 //ветка git проекта
 env.constGitBranch = 'DatanaMesLaboratoryGateway'
 
@@ -27,49 +29,6 @@ env.constDockerImageVersion = "3"
 env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
 /**
- * Собирает информацию о коммитах
- * (писал Даниил)
- */
-@NonCPS
-def getChangeLog(passedBuilds) {
-    def log = ""
-    for (int x = 0; x < passedBuilds.size(); x++) {
-        def currentBuild = passedBuilds[x];
-        def changeLogSets = currentBuild.rawBuild.changeSets
-        for (int i = 0; i < changeLogSets.size(); i++) {
-            def entries = changeLogSets[i].items
-            for (int j = 0; j < entries.length; j++) {
-                def entry = entries[j]
-                def comment = entry.msg
-
-                def commentСut = comment.replaceAll("${env.constJiraURL}", "")
-                def commentСut2 = commentСut
-                def urls = ""
-
-                //вырезается имя задачи по регулярному выражению NKR--XXXX -- где XXX - номер задача в JIRA
-                commentСut.eachMatch("NKR-[0-9]+") {
-                    ch ->
-                        urls += '<a href=\\"' + "\"${env.constJiraURL}${ch}\"" + '\\">' + "${ch}</a> "
-                        commentСut2 = commentСut2.replaceAll("${ch}", "")
-                }
-                //для отладки
-                echo "Comment: ${commentСut2}"
-
-                //ссылка на задачу в JRIA (она может быть пустой если нет задачи в описании коммита)
-                echo "Tasks: ${urls}"
-
-                //склейка сообщения из несколько комментариев по каммитам
-                log += "${j + 1}. by ${entry.author} on ${new Date(entry.timestamp)}\nComment: ${commentСut2} \nTask: ${urls}\n"
-
-
-            }
-            log += "\n"
-        }
-    }
-    return log;
-}
-
-/**
  * Тело Pipeline
  */
 try {
@@ -91,7 +50,8 @@ try {
 
 
             //путь на мавен и яву для запуска в SHELL-Linux
-            env.PATH = "$constMVN_HOME/bin:$constJAVA_HOME/bin:$PATH"
+            env.PATH = "$datanaCommons.constMVN_HOME/bin:$datanaCommons.constJAVA_HOME/bin:$PATH"
+            echo "[PARAM] PATH=$PATH"
             passedBuilds = []
             lastSuccessfulBuild(passedBuilds, currentBuild);
 
@@ -105,7 +65,6 @@ try {
 
 
             //для отладки
-            echo "[PARAM] PATH=$PATH"
             echo "-----------------------------------"
             echo sh(script: 'env|sort', returnStdout: true)
             echo "==================================="
