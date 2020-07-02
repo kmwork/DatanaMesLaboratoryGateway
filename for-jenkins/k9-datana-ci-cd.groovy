@@ -1,4 +1,5 @@
 @Library('JenkinsDatanaCommon@1.0')
+//@Grab(group='ru.datana.groovy.jenkins', module='JenkinsDatanaCommon', version='1.0')
 import ru.datana.groovy.jenkins.JenkinsDatanaCommon
 
 /** пример Jenkins сборки PipeLine **/
@@ -131,7 +132,7 @@ try {
 
 } catch (e) {
 
-    // перехват ошибкой для отправки в телеграм о аварии при сборке
+    // перехват ошибки для отправки в телеграм о аварии при сборке
     currentBuild.result = "FAILED"
     node {
         sendTelegram("Сборка сломалась ${env.allJob}.Version ${constDatanaVersion}. build ${env.BUILD_NUMBER}")
