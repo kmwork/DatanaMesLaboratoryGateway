@@ -76,52 +76,20 @@ try {
             sh "mvn clean compile package spring-boot:repackage"
         }
         stage('step-3: Docker remove') {
-            try {
-                //остановка докер контейнеров
-                sh '''#!/bin/bash -xe
-                    echo "for name = ${constDockerTag}"
-                    echo "[cmd] = docker ps | grep ${constDockerTag} | awk '{print $1}' | xargs docker stop"
-                    docker ps | grep ${constDockerTag} | awk '{print $1}' | xargs docker stop
-                '''
-            } catch (e) {
-                //если ошибка то "глуши ошибку так как контейнеров может  не быть, если в первый запуск
-                echo "[#1]stop docker with error : " + e
-            }
-
-            try {
-                // удаление всех докер образов
-                sh '''#!/bin/bash -xe
-                    echo "[cmd] = docker images | grep ${constDockerTag} | awk '{print $3}' | xargs docker rmi -f"
-                    docker images | grep ${constDockerTag} | awk '{print $3}' | xargs docker rmi -f
-                '''
-            } catch (e) {
-                //возможна ошибка если докер нет (в первый запуск)
-                echo "[#2]remove docker with error : " + e
-            }
+           datanaCommons.removeDocker(env.constDockerTag)
         }
 
-
         stage('step-4: Docker build') {
-            //сборка докера и установка тега-метки на образ
-            sh "docker build --tag=$env.constImageDocker --file ./target/Dockerfile ."
+            dockerBuild(env.constImageDocker)
         }
 
         stage('step-5: Docker create') {
-            //создание локально докер контейнера в докер машине
-            sh "docker create \"$env.constImageDocker\""
-
-            //запуск докера "в бой"
-            sh "docker run --rm -d -p $env.constExtPort:$env.constInnerPort \"$env.constImageDocker\""
+            dockerCreate(env.constImageDocker, $env.constExtPort, $env.constInnerPort)
         }
 
         stage('step-6: Docker push') {
-            //авторизация в nexus (пароль на nexus читается из файла на локальном ПК)
-            sh "cat /home/lin/apps/datana-docker-secret/password-nexus-datana.txt | docker login --password-stdin --username=${env.constDockerRegistryLogin} ${env.constDockerRegistry}"
-
-            //публикация докер контейнера в nexus
-            sh "docker push $env.constImageDocker"
+            dockerCreate($env.constImageDocker)
         }
-
 
         stage('step-7: Telegram step') {
             //отправка сообщения в телеграм об успешной сборке
