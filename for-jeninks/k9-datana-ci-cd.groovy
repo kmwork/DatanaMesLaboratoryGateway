@@ -1,3 +1,5 @@
+@Library('JenkinsDatanaCommon@1.0')
+import ru.datana.JenkinsDatanaCommon
 /** пример Jenkins сборки PipeLine **/
 /** сделано по JIRA задаче : https://jira.dds.lanit.ru/browse/NKR-465 **/
 

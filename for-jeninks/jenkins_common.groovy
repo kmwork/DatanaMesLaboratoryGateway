@@ -1,6 +1,7 @@
+import com.google.common.graph.GraphBuilder
+
 /** пример Jenkins сборки PipeLine **/
 /** сделано по JIRA задаче : https://jira.dds.lanit.ru/browse/NKR-465 **/
-
 //наименование аккаунта на гит
 env.constGitCredentialsId = 'kostya5'
 
