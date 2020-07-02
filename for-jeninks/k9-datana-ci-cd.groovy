@@ -7,21 +7,6 @@ env.constGitBranch = 'DatanaMesLaboratoryGateway'
 // gitlab репозитарий датаны
 env.constGitUrl = 'git@gitlab.dds.lanit.ru:mmk_niokr/tools.git'
 
-//наименование аккаунта на гит
-env.constGitCredentialsId = 'kostya5'
-
-//путь где установлен мавен
-env.constMVN_HOME = '/home/lin/apps/apache-maven-3.5.4'
-
-//путь где ява
-env.constJAVA_HOME = '/home/lin/apps/jdk13'
-
-// nexus-репозитарий под докеры
-env.constDockerDomain = "172.29.40.56:8083"
-
-// url для авторизации для nexus репозитарий
-env.constDockerRegistry = "http://$env.constDockerDomain/"
-
 //внешний порт для докера
 env.constExtPort = 9990
 // рабочий порт явы-приложения внутри докера
@@ -38,51 +23,6 @@ env.constDockerImageVersion = "3"
 
 // полное имя докер образа с учетом репозитария
 env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
-
-//логин для авторизации на nexus репозиторий
-env.constDockerRegistryLogin = "robot-developer"
-
-// токен для доступа в телеграм канал для бота который пишет сообщения о факте начало и окончания сборки
-env.constTelegramURL = "https://api.telegram.org/bot1180854473:AAG1BHnbcM4oRRZW2-DKbZMYD2WqkDtUesU/sendMessage?chat_id=-1001325011128&parse_mode=HTML"
-
-//имя проекта jenkins
-env.allJob = JOB_NAME
-
-//url для ссылок по задачам из коммитов
-env.constJiraURL = "https://jira.dds.lanit.ru/browse/"
-
-// номер сборки в jenkins
-env.constDatanaVersion = "-1"
-
-@NonCPS
-def loadProperties(Properties properties) {
-    File propertiesFile = new File("$WORKSPACE/buildNumber.properties")
-    propertiesFile.withInputStream {
-        properties.load(it)
-    }
-}
-/**
- * Собирает информацию о коммитах
- * (писал Даниил)
- * @param passedBuilds
- * @param build
- * @return
- */
-def lastSuccessfulBuild(passedBuilds, build) {
-    if ((build != null) && (build.result != 'SUCCESS')) {
-        passedBuilds.add(build)
-        lastSuccessfulBuild(passedBuilds, build.getPreviousBuild())
-    }
-}
-
-/**
- * Отправка сообщения в телеграм через бот
- * @param msg текст сообщения для телеграм
- * @return
- */
-def sendTelegram(String msg) {
-    sh "/usr/bin/curl -X POST  \"${env.constTelegramURL}\" -d \"text=${msg}\""
-}
 
 /**
  * Собирает информацию о коммитах
@@ -149,7 +89,7 @@ try {
 
 
             //путь на мавен и яву для запуска в SHELL-Linux
-            env.PATH = "$env.constMVN_HOME/bin:$env.constJAVA_HOME/bin:$PATH"
+            env.PATH = "$constMVN_HOME/bin:$constJAVA_HOME/bin:$PATH"
             passedBuilds = []
             lastSuccessfulBuild(passedBuilds, currentBuild);
 
