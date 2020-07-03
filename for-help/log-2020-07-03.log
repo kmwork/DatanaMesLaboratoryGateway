@@ -1,0 +1,92 @@
+[2020-07-03T19:57:04.013Z] Started by user fillip datana
+[2020-07-03T19:57:04.015Z] Running in Durability level: MAX_SURVIVABILITY
+[2020-07-03T19:57:04.035Z] Loading library JenkinsDatanaCommon@1.0
+[2020-07-03T19:57:04.039Z] using credential kostya5
+[2020-07-03T19:57:04.051Z]  > git rev-parse --is-inside-work-tree # timeout=10
+[2020-07-03T19:57:04.082Z] Fetching changes from the remote Git repository
+[2020-07-03T19:57:04.083Z]  > git config remote.origin.url git@gitlab.dds.lanit.ru:mmk_niokr/tools.git # timeout=10
+[2020-07-03T19:57:04.129Z] Fetching upstream changes from git@gitlab.dds.lanit.ru:mmk_niokr/tools.git
+[2020-07-03T19:57:04.129Z]  > git --version # timeout=10
+[2020-07-03T19:57:04.156Z] using GIT_SSH to set credentials ssh private-gitlab
+[2020-07-03T19:57:04.177Z]  > git fetch --tags --progress -- git@gitlab.dds.lanit.ru:mmk_niokr/tools.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2020-07-03T19:57:04.705Z]  > git rev-parse origin/JenkinsDatanaLibrary^{commit} # timeout=10
+[2020-07-03T19:57:04.723Z] Checking out Revision 8c24045dbf728025c6b880e9478b4def61b15a60 (origin/JenkinsDatanaLibrary)
+[2020-07-03T19:57:04.723Z]  > git config core.sparsecheckout # timeout=10
+[2020-07-03T19:57:04.735Z]  > git checkout -f 8c24045dbf728025c6b880e9478b4def61b15a60 # timeout=10
+[2020-07-03T19:57:04.757Z] Commit message: "либа для PipeLine под Jenkins v002"
+[2020-07-03T19:57:04.757Z]  > git rev-list --no-walk 8c24045dbf728025c6b880e9478b4def61b15a60 # timeout=10
+[2020-07-03T19:57:04.910Z] [Pipeline] Start of Pipeline
+[2020-07-03T19:57:04.941Z] [Pipeline] library
+[2020-07-03T19:57:04.966Z] Only using first definition of library JenkinsDatanaCommon
+[2020-07-03T19:57:05.402Z] [Pipeline] node
+[2020-07-03T19:57:05.468Z] Running on Jenkins in /var/lib/jenkins/workspace/k7-jms
+[2020-07-03T19:57:05.477Z] [Pipeline] {
+[2020-07-03T19:57:05.503Z] [Pipeline] stage
+[2020-07-03T19:57:05.512Z] [Pipeline] { (step-1: Init)
+[2020-07-03T19:57:05.606Z] [Pipeline] cleanWs
+[2020-07-03T19:57:05.613Z] [WS-CLEANUP] Deleting project workspace...
+[2020-07-03T19:57:05.616Z] [WS-CLEANUP] Deferred wipeout is used...
+[2020-07-03T19:57:05.634Z] [WS-CLEANUP] done
+[2020-07-03T19:57:05.641Z] [Pipeline] }
+[2020-07-03T19:57:05.668Z] [Pipeline] // stage
+[2020-07-03T19:57:05.682Z] [Pipeline] }
+[2020-07-03T19:57:05.733Z] [Pipeline] // node
+[2020-07-03T19:57:05.765Z] [Pipeline] node
+[2020-07-03T19:57:05.790Z] Running on Jenkins in /var/lib/jenkins/workspace/k7-jms
+[2020-07-03T19:57:05.797Z] [Pipeline] {
+[2020-07-03T19:57:05.810Z] [Pipeline] }
+[2020-07-03T19:57:05.860Z] [Pipeline] // node
+[2020-07-03T19:57:05.902Z] [Pipeline] End of Pipeline
+[2020-07-03T19:57:05.939Z] hudson.remoting.ProxyException: groovy.lang.MissingMethodException: No signature of method: ru.datana.groovy.jenkins.JenkinsDatanaCommon.sh() is applicable for argument types: (org.codehaus.groovy.runtime.GStringImpl) values: [/usr/bin/curl -X POST  "https://api.telegram.org/bot1180854473:AAG1BHnbcM4oRRZW2-DKbZMYD2WqkDtUesU/sendMessage?chat_id=-1001325011128&parse_mode=HTML" -d "text=Сборка сломалась null.Version -1. build 100"]
+[2020-07-03T19:57:05.939Z] Possible solutions: is(java.lang.Object), use([Ljava.lang.Object;), any(), any(groovy.lang.Closure), use(java.lang.Class, groovy.lang.Closure), with(groovy.lang.Closure)
+[2020-07-03T19:57:05.939Z] 	at org.codehaus.groovy.runtime.ScriptBytecodeAdapter.unwrap(ScriptBytecodeAdapter.java:58)
+[2020-07-03T19:57:05.939Z] 	at org.codehaus.groovy.runtime.callsite.PogoMetaClassSite.call(PogoMetaClassSite.java:54)
+[2020-07-03T19:57:05.939Z] 	at org.codehaus.groovy.runtime.callsite.CallSiteArray.defaultCall(CallSiteArray.java:48)
+[2020-07-03T19:57:05.939Z] 	at org.codehaus.groovy.runtime.callsite.AbstractCallSite.call(AbstractCallSite.java:113)
+[2020-07-03T19:57:05.939Z] 	at com.cloudbees.groovy.cps.sandbox.DefaultInvoker.methodCall(DefaultInvoker.java:20)
+[2020-07-03T19:57:05.939Z] 	at ru.datana.groovy.jenkins.JenkinsDatanaCommon.sendTelegram(JenkinsDatanaCommon.groovy:63)
+[2020-07-03T19:57:05.939Z] 	at WorkflowScript.run(WorkflowScript:109)
+[2020-07-03T19:57:05.939Z] 	at ___cps.transform___(Native Method)
+[2020-07-03T19:57:05.939Z] 	at com.cloudbees.groovy.cps.impl.ContinuationGroup.methodCall(ContinuationGroup.java:86)
+[2020-07-03T19:57:05.939Z] 	at com.cloudbees.groovy.cps.impl.FunctionCallBlock$ContinuationImpl.dispatchOrArg(FunctionCallBlock.java:113)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.FunctionCallBlock$ContinuationImpl.fixArg(FunctionCallBlock.java:83)
+[2020-07-03T19:57:05.940Z] 	at jdk.internal.reflect.GeneratedMethodAccessor184.invoke(Unknown Source)
+[2020-07-03T19:57:05.940Z] 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2020-07-03T19:57:05.940Z] 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.ContinuationPtr$ContinuationImpl.receive(ContinuationPtr.java:72)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.FunctionCallBlock$ContinuationImpl.dispatchOrArg(FunctionCallBlock.java:107)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.FunctionCallBlock$ContinuationImpl.fixArg(FunctionCallBlock.java:83)
+[2020-07-03T19:57:05.940Z] 	at jdk.internal.reflect.GeneratedMethodAccessor184.invoke(Unknown Source)
+[2020-07-03T19:57:05.940Z] 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2020-07-03T19:57:05.940Z] 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.ContinuationPtr$ContinuationImpl.receive(ContinuationPtr.java:72)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.ContinuationGroup.methodCall(ContinuationGroup.java:89)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.FunctionCallBlock$ContinuationImpl.dispatchOrArg(FunctionCallBlock.java:113)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.FunctionCallBlock$ContinuationImpl.fixArg(FunctionCallBlock.java:83)
+[2020-07-03T19:57:05.940Z] 	at jdk.internal.reflect.GeneratedMethodAccessor184.invoke(Unknown Source)
+[2020-07-03T19:57:05.940Z] 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+[2020-07-03T19:57:05.940Z] 	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.ContinuationPtr$ContinuationImpl.receive(ContinuationPtr.java:72)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.impl.ConstantBlock.eval(ConstantBlock.java:21)
+[2020-07-03T19:57:05.940Z] 	at com.cloudbees.groovy.cps.Next.step(Next.java:83)
+[2020-07-03T19:57:05.941Z] 	at com.cloudbees.groovy.cps.Continuable$1.call(Continuable.java:174)
+[2020-07-03T19:57:05.941Z] 	at com.cloudbees.groovy.cps.Continuable$1.call(Continuable.java:163)
+[2020-07-03T19:57:05.941Z] 	at org.codehaus.groovy.runtime.GroovyCategorySupport$ThreadCategoryInfo.use(GroovyCategorySupport.java:129)
+[2020-07-03T19:57:05.941Z] 	at org.codehaus.groovy.runtime.GroovyCategorySupport.use(GroovyCategorySupport.java:268)
+[2020-07-03T19:57:05.942Z] 	at com.cloudbees.groovy.cps.Continuable.run0(Continuable.java:163)
+[2020-07-03T19:57:05.942Z] 	at org.jenkinsci.plugins.workflow.cps.CpsThread.runNextChunk(CpsThread.java:185)
+[2020-07-03T19:57:05.942Z] 	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup.run(CpsThreadGroup.java:400)
+[2020-07-03T19:57:05.942Z] 	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup.access$400(CpsThreadGroup.java:96)
+[2020-07-03T19:57:05.942Z] 	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup$2.call(CpsThreadGroup.java:312)
+[2020-07-03T19:57:05.942Z] 	at org.jenkinsci.plugins.workflow.cps.CpsThreadGroup$2.call(CpsThreadGroup.java:276)
+[2020-07-03T19:57:05.942Z] 	at org.jenkinsci.plugins.workflow.cps.CpsVmExecutorService$2.call(CpsVmExecutorService.java:67)
+[2020-07-03T19:57:05.943Z] 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+[2020-07-03T19:57:05.943Z] 	at hudson.remoting.SingleLaneExecutorService$1.run(SingleLaneExecutorService.java:131)
+[2020-07-03T19:57:05.943Z] 	at jenkins.util.ContextResettingExecutorService$1.run(ContextResettingExecutorService.java:28)
+[2020-07-03T19:57:05.943Z] 	at jenkins.security.ImpersonatingExecutorService$1.run(ImpersonatingExecutorService.java:59)
+[2020-07-03T19:57:05.943Z] 	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+[2020-07-03T19:57:05.943Z] 	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+[2020-07-03T19:57:05.943Z] 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+[2020-07-03T19:57:05.943Z] 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+[2020-07-03T19:57:05.944Z] 	at java.base/java.lang.Thread.run(Thread.java:834)
+[2020-07-03T19:57:05.944Z] Finished: FAILURE
