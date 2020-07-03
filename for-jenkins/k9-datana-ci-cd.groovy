@@ -1,5 +1,7 @@
-@Library('JenkinsDatanaCommon@1.0')
-//@Grab(group='ru.datana.groovy.jenkins', module='JenkinsDatanaCommon', version='1.0')
+import org.codehaus.groovy.runtime.GStringImpl
+import org.jenkinsci.plugins.workflow.libs.LibraryConfiguration
+//@Library('JenkinsDatanaCommon@1.0')
+library 'JenkinsDatanaCommon'
 import ru.datana.groovy.jenkins.JenkinsDatanaCommon
 
 /** пример Jenkins сборки PipeLine **/
@@ -29,6 +31,7 @@ env.constDockerImageVersion = "3"
 // полное имя докер образа с учетом репозитария
 env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
+
 /**
  * Тело Pipeline
  */
@@ -47,7 +50,7 @@ try {
             datanaCommons.loadProperties(properties)
 
             // номер сборки в jenkins
-            datanaCommons.constDatanaVersion = properties.fixMajorMinor + "." + properties.buildNumber
+            datanaCommons.varDatanaVersion = properties.fixMajorMinor + "." + properties.buildNumber
 
 
             //путь на мавен и яву для запуска в SHELL-Linux
@@ -62,7 +65,7 @@ try {
             }
 
             //отправка о начале сборки в телеграм
-            datanaCommons.sendTelegram("Начинаю сборку:  ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
+            datanaCommons.sendTelegram("Начинаю сборку:  ${datanaCommons.allJob}. Version ${datanaCommons.varDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
 
 
             //для отладки
@@ -76,7 +79,7 @@ try {
             sh "mvn clean compile package spring-boot:repackage"
         }
         stage('step-3: Docker remove') {
-           datanaCommons.removeDocker(env.constDockerTag)
+            datanaCommons.removeDocker(env.constDockerTag)
         }
 
         stage('step-4: Docker build') {
@@ -93,7 +96,7 @@ try {
 
         stage('step-7: Telegram step') {
             //отправка сообщения в телеграм об успешной сборке
-            datanaCommons.sendTelegram("Сборка завершена ${datanaCommons.allJob}. Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
+            datanaCommons.sendTelegram("Сборка завершена ${datanaCommons.allJob}. Version ${datanaCommons.varDatanaVersion}. build ${env.BUILD_NUMBER}")
         }
     }
 
@@ -103,7 +106,7 @@ try {
     // перехват ошибки для отправки в телеграм о аварии при сборке
     currentBuild.result = "FAILED"
     node {
-        datanaCommons.sendTelegram("Сборка сломалась ${datanaCommons.allJob}.Version ${datanaCommons.constDatanaVersion}. build ${env.BUILD_NUMBER}")
+        datanaCommons.sendTelegram("Сборка сломалась ${datanaCommons.allJob}.Version ${datanaCommons.varDatanaVersion}. build ${env.BUILD_NUMBER}")
     }
     throw e
 }
