@@ -29,7 +29,7 @@ env.constDockerTag = "mes_jms"
 env.constDockerImageVersion = "3"
 
 // полное имя докер образа с учетом репозитария
-env.constImageDocker = "$env.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
+env.constImageDocker = "$datanaCommons.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
 
 /**
