@@ -7,7 +7,7 @@ import ru.datana.groovy.jenkins.JenkinsDatanaCommon
 /** пример Jenkins сборки PipeLine **/
 /** сделано по JIRA задаче : https://jira.dds.lanit.ru/browse/NKR-465 **/
 
-def datanaCommons = new JenkinsDatanaCommon()
+def datanaCommons = new JenkinsDatanaCommon(this)
 //ветка git проекта
 env.constGitBranch = 'DatanaMesLaboratoryGateway'
 
@@ -42,7 +42,7 @@ try {
             cleanWs()
 
             //чтение гитхаба
-            checkout([$class: 'GitSCM', branches: [[name: datanaCommons.constGitBranch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: datanaCommons.constGitCredentialsId, url: env.constGitUrl]]])
+            checkout([$class: 'GitSCM', branches: [[name: env.constGitBranch]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: datanaCommons.constGitCredentialsId, url: env.constGitUrl]]])
 
             echo "[#0 file] $WORKSPACE/buildNumber.properties"
 
@@ -54,7 +54,7 @@ try {
 
 
             //путь на мавен и яву для запуска в SHELL-Linux
-            env.PATH = "$datanaCommons.constMVN_HOME/bin:$datanaCommons.constJAVA_HOME/bin:$PATH"
+            env.PATH = "$pipelineParamMavenHome/bin:$pipelineParamJavaHome/bin:$PATH"
             echo "[PARAM] PATH=$PATH"
             passedBuilds = []
             datanaCommons.lastSuccessfulBuild(passedBuilds, currentBuild);
@@ -87,11 +87,11 @@ try {
         }
 
         stage('step-5: Docker create') {
-            datanaCommons.dockerCreate(env.constImageDocker, $env.constExtPort, $env.constInnerPort)
+            datanaCommons.dockerCreate(env.constImageDocker, env.constExtPort, env.constInnerPort)
         }
 
         stage('step-6: Docker push') {
-            datanaCommons.dockerCreate($env.constImageDocker)
+            datanaCommons.dockerCreate(env.constImageDocker)
         }
 
         stage('step-7: Telegram step') {
