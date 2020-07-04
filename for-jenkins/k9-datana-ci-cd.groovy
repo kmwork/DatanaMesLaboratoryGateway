@@ -28,6 +28,9 @@ env.constDockerTag = "mes_jms"
 //версия приложения (докера)
 env.constDockerImageVersion = "3"
 
+//имя проекта jenkins
+def final constAllJob = JOB_NAME
+
 // полное имя докер образа с учетом репозитария
 env.constImageDocker = "$datanaCommons.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
 
@@ -65,7 +68,7 @@ try {
             }
 
             //отправка о начале сборки в телеграм
-            datanaCommons.sendTelegram("Начинаю сборку:  ${datanaCommons.allJob}. Version ${datanaCommons.varDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
+            datanaCommons.sendTelegram("Начинаю сборку:  ${env.constAllJob}. Version ${datanaCommons.varDatanaVersion}. build ${BUILD_NUMBER}\nВ этой серии вы увидите: \n ${changeLog}");
 
 
             //для отладки
@@ -79,7 +82,7 @@ try {
             sh "mvn clean compile package spring-boot:repackage"
         }
         stage('step-3: Docker remove') {
-            datanaCommons.removeDocker(env.constDockerTag)
+            datanaCommons.removeDocker()
         }
 
         stage('step-4: Docker build') {
@@ -96,7 +99,7 @@ try {
 
         stage('step-7: Telegram step') {
             //отправка сообщения в телеграм об успешной сборке
-            datanaCommons.sendTelegram("Сборка завершена ${datanaCommons.allJob}. Version ${datanaCommons.varDatanaVersion}. build ${env.BUILD_NUMBER}")
+            datanaCommons.sendTelegram("Сборка завершена ${env.constAllJob}. Version ${datanaCommons.varDatanaVersion}. build ${env.BUILD_NUMBER}")
         }
     }
 
@@ -106,7 +109,7 @@ try {
     // перехват ошибки для отправки в телеграм о аварии при сборке
     currentBuild.result = "FAILED"
     node {
-        datanaCommons.sendTelegram("Сборка сломалась ${datanaCommons.allJob}.Version ${datanaCommons.varDatanaVersion}. build ${env.BUILD_NUMBER}")
+        datanaCommons.sendTelegram("Сборка сломалась ${env.constAllJob}.Version ${datanaCommons.varDatanaVersion}. build ${env.BUILD_NUMBER}")
     }
     throw e
 }
