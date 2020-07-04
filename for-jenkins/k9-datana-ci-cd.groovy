@@ -29,7 +29,7 @@ env.constDockerTag = "mes_jms"
 env.constDockerImageVersion = "3"
 
 //имя проекта jenkins
-def final constAllJob = JOB_NAME
+env.constAllJob = JOB_NAME
 
 // полное имя докер образа с учетом репозитария
 env.constImageDocker = "$datanaCommons.constDockerDomain/$env.constDockerName/$env.constDockerTag:$env.constDockerImageVersion"
