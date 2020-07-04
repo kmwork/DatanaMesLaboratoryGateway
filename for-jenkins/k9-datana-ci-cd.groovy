@@ -91,7 +91,7 @@ try {
         }
 
         stage('step-6: Docker push') {
-            datanaCommons.dockerCreate(env.constImageDocker)
+            datanaCommons.dockerPush(env.constImageDocker)
         }
 
         stage('step-7: Telegram step') {
